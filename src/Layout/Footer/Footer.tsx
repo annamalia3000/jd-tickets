@@ -10,7 +10,7 @@ export const Footer = () => {
         <Contacts />
         <Subscribe />
       </div>
-      <div className={classes["footer__other"]}>
+      <div className={classes["footer__bottom"]}>
       <FooterBottom />
       </div>
     </div>
