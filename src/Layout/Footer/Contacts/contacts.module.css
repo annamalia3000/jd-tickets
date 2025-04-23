@@ -1,0 +1,39 @@
+.contacts {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
+.contacts__title {
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 100%;
+}
+
+.contacts__list {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 29px;
+}
+
+.contacts__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 35px;
+
+  cursor: pointer;
+}
+
+.contacts__icon {
+  height: 30px;
+  width: 30px;
+}
+
+.contacts__text {
+}
+

@@ -1,0 +1,30 @@
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+
+  padding: 26px 263px 34px 253px;
+}
+
+.footer-bottom__logo {
+  font-weight: 900;
+  font-size: 36px;
+  line-height: 100%;
+
+  color: #e5e5e5;
+}
+
+.footer-bottom__icon {
+  position: relative;
+  left: 16px;
+
+}
+
+.footer-bottom__year {
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 100%;
+
+  color: #e5e5e5;
+}
