@@ -1,16 +1,17 @@
-import {Outlet} from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { Footer } from "./Footer/Footer";
-import classes from './layout.module.css';
 
+import { Header } from "./Header/Header";
+import classes from "./layout.module.css";
 
 export const Layout = () => {
   return (
     <div className={classes["container"]}>
-        <main>
+      <Header />
+      <main>
         <Outlet />
-        </main>
-        <Footer/>
-       
+      </main>
+      <Footer />
     </div>
-  )
-}
+  );
+};

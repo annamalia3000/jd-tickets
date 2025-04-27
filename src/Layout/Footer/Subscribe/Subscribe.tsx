@@ -26,7 +26,7 @@ export const Subscribe = () => {
             placeholder="e-mail"
             className={classes["subscribe__input"]}
           />
-          <button className={cn(classes["subscribe__button"], "dark-button")}>
+          <button className={cn(classes["subscribe__button"], "clear-button")}>
             Отправить
           </button>
         </div>

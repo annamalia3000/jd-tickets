@@ -10,6 +10,7 @@
 }
 
 body {
+  box-sizing: border-box;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -58,7 +59,7 @@ a {
   color: #ffca62;
 }
 
-.dark-button {
+.clear-button {
   color: #e5e5e5;
   background-color: #2d2b2f;
   cursor: pointer;
@@ -67,13 +68,13 @@ a {
   border-radius: 3px;
 }
 
-.dark-button:hover {
+.clear-button:hover {
   color: #2d2b2f;
   background-color: #ffca62;
   border-color: #ffca62;
 }
 
-.dark-button:active {
+.clear-button:active {
   color: #2d2b2f;
   background-color: #e5e5e5;
   border-color: #e5e5e5;;

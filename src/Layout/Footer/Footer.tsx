@@ -5,13 +5,13 @@ import classes from "./footer.module.css";
 
 export const Footer = () => {
   return (
-    <div className={classes["footer"]}>
+    <div id="contacts" className={classes["footer"]}>
       <div className={classes["footer__content"]}>
         <Contacts />
         <Subscribe />
       </div>
       <div className={classes["footer__bottom"]}>
-      <FooterBottom />
+        <FooterBottom />
       </div>
     </div>
   );

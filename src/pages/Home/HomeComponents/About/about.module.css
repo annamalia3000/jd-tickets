@@ -1,0 +1,39 @@
+.about {
+    box-sizing: border-box;
+  height: 559px;
+  display: flex;
+  flex-direction: column;
+  color: #292929;
+  background-color: #ffffff;
+
+  padding: 144px 258px;
+}
+
+.about__title {
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 100%;
+
+  text-transform: uppercase;
+  margin-bottom: 33px;
+}
+
+.about__content {
+  display: flex;
+  flex-direction: column;
+
+  gap: 24px;
+  border-left: 9px solid #ffa800;
+  padding-left: 19px;
+  padding-right: 204px;
+}
+.about__text {
+  position: relative;
+  top: -3px;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.9rem;
+}
+.about__text-b {
+  font-weight: 700;
+}

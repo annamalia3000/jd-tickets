@@ -8,6 +8,7 @@ export const FooterBottom = () => {
       behavior: "smooth",
     });
   };
+  
   return (
     <div className={classes["footer-bottom"]}>
       <span className={classes["footer-bottom__logo"]}>Лого</span>
