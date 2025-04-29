@@ -1,0 +1,50 @@
+.direction {
+}
+
+.direction__title {
+  font-weight: 300;
+  font-size: 30px;
+  line-height: 100%;
+  color: rgba(255, 255, 255, 1);
+}
+.direction__inputs {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.direction__input-container {
+    position: relative;
+
+}
+.direction__input {
+ 
+  box-sizing: border-box;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 100%;
+
+  width: 322px;
+  height: 60px;
+  border-radius: 3px;
+  padding: 10px;
+}
+
+.direction__input-icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: rgba(229, 229, 229, 1);
+}
+
+.direction__swap-button {
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background-color: transparent;
+
+}
+.direction__swap-icon {
+    width: 24px;
+    height: 24px;
+}
