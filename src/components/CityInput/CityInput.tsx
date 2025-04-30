@@ -56,23 +56,22 @@ export const CityInput = ({
     city.name.toLowerCase().startsWith(value.toLowerCase())
   );
 
-
   return (
     <div className={classes["city__input-container"]}>
-     <div className={classes["city__ghost-text"]}>
-  {matchedSuggestion && matchedSuggestion.name.toLowerCase().startsWith(value.toLowerCase()) ? (
-    <>
-      <span className={classes["city__ghost-transparent"]}>
-        {matchedSuggestion.name.slice(0, value.length)}
-      </span>
-      <span className={classes["city__ghost-visible"]}>
-      {matchedSuggestion.name.slice(value.length)}
-      </span>
-
-    </>
-  ) : null}
-</div>
-
+      <div className={classes["city__ghost-text"]}>
+        {value &&
+        matchedSuggestion &&
+        matchedSuggestion.name.toLowerCase().startsWith(value.toLowerCase()) ? (
+          <>
+            <span className={classes["city__ghost-transparent"]}>
+              {matchedSuggestion.name.slice(0, value.length)}
+            </span>
+            <span className={classes["city__ghost-visible"]}>
+              {matchedSuggestion.name.slice(value.length)}
+            </span>
+          </>
+        ) : null}
+      </div>
 
       <input
         type="text"
@@ -86,11 +85,17 @@ export const CityInput = ({
           setShowSuggestions(true);
         }}
         onFocus={() => setShowSuggestions(true)}
-        // onBlur={() => {
-        //   setTimeout(() => {
-        //     setShowSuggestions(false);
-        //   }, 200);
-        // }}
+        onBlur={() => {
+          setTimeout(() => {
+            setShowSuggestions(false);
+          }, 200);
+        }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && matchedSuggestion) {
+            e.preventDefault();
+            handleSelect(matchedSuggestion.name);
+          }
+        }}
       />
       <LocationIcon className={classes["city__input-icon"]} />
       {suggestions.length > 0 && showSuggestions && (
