@@ -9,42 +9,25 @@
 }
 .direction__inputs {
   display: flex;
-  align-items: center;
+
   gap: 5px;
-}
-.direction__input-container {
-    position: relative;
-
-}
-.direction__input {
- 
-  box-sizing: border-box;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 100%;
-
-  width: 322px;
-  height: 60px;
-  border-radius: 3px;
-  padding: 10px;
-}
-
-.direction__input-icon {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    color: rgba(229, 229, 229, 1);
+  background-color: black;
 }
 
 .direction__swap-button {
-    cursor: pointer;
-    width: 24px;
-    height: 24px;
-    border: none;
-    background-color: transparent;
+  padding: 0;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
+  padding-top: 35px;
 }
 .direction__swap-icon {
-    width: 24px;
-    height: 24px;
+  width: 24px;
+  height: 24px;
 }

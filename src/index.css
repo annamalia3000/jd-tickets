@@ -41,6 +41,12 @@ menu {
   padding: 0;
 }
 
+ul,
+ol,
+li {
+  list-style: none;
+}
+
 a {
   text-decoration: none;
   color: inherit;
@@ -77,5 +83,5 @@ a {
 .clear-button:active {
   color: #2d2b2f;
   background-color: #e5e5e5;
-  border-color: #e5e5e5;;
+  border-color: #e5e5e5;
 }
