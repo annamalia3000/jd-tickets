@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { PopUp } from "../../../components/PopUp/PopUp";
 import YoutubeIcon from "../../../assets/icons/youtube.svg?react";
 import LinkedIn from "../../../assets/icons/linkedIn.svg?react";
 import Facebook from "../../../assets/icons/facebook.svg?react";
@@ -6,14 +8,41 @@ import Google from "../../../assets/icons/google.svg?react";
 import cn from "classnames";
 import classes from "./subscribe.module.css";
 
+
+
 export const Subscribe = () => {
-  const handleSubmit = (formData: FormData) => {
+  const [success, setSuccess] = useState(true);
+  const handleSubmit = async (formData: FormData) => {
     const email = formData.get("email") as string;
     console.log(email);
-    //TO DO: logic for email
+
+    const url = import.meta.env.VITE_HOST;
+    const apiURL = `${url}/subscribe?email=${email}`;
+
+    if (!email) {
+      return;
+    }
+
+    try {
+      const response = await fetch(apiURL, {
+        method: "POST",
+      });
+      const data = await response.json();
+      setSuccess(true);
+      console.log(data);
+    } catch (error) {
+      console.log("Ошибка подписки", error);
+    }
   };
   return (
     <div className={classes["subscribe"]}>
+       <PopUp
+        isOpen={success}
+        type="info" 
+        textFirst="Вы успешно подписались на рассылку"
+        textSecond="На ваш e-mail отправлено письмо для подтверждения электронной почты"
+        onClose={() => setSuccess(false)}
+      />
       <h3 className={classes["subscribe__title"]}>Подписка</h3>
       <form action={handleSubmit} className={classes["subscribe__form"]}>
         <span className={classes["subscribe__text"]}>
@@ -26,7 +55,7 @@ export const Subscribe = () => {
             placeholder="e-mail"
             className={classes["subscribe__input"]}
           />
-          <button className={cn(classes["subscribe__button"], "clear-button")}>
+          <button className={cn(classes["subscribe__button"], "dark-button")}>
             Отправить
           </button>
         </div>
@@ -71,4 +100,5 @@ export const Subscribe = () => {
       </div>
     </div>
   );
+
 };

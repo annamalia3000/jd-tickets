@@ -22,7 +22,7 @@ export const HowWorks = () => {
           <p className={classes["how__icon-text"]}>Огромный выбор направлений</p>
         </div>
       </div>
-      <button className={cn(classes["how__button"], "clear-button")}>Узнать больше</button>
+      <button className={cn(classes["how__button"], "dark-button")}>Узнать больше</button>
     </div>
   );
 };

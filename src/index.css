@@ -65,7 +65,7 @@ a {
   color: #ffca62;
 }
 
-.clear-button {
+.dark-button {
   color: #e5e5e5;
   background-color: #2d2b2f;
   cursor: pointer;
@@ -74,14 +74,33 @@ a {
   border-radius: 3px;
 }
 
-.clear-button:hover {
+.dark-button:hover {
   color: #2d2b2f;
   background-color: #ffca62;
   border-color: #ffca62;
 }
 
-.clear-button:active {
+.dark-button:active {
   color: #2d2b2f;
   background-color: #e5e5e5;
   border-color: #e5e5e5;
+}
+
+.clear-button {
+  color: rgba(41, 41, 41, 1);
+
+  cursor: pointer;
+
+  border: 1px solid rgba(41, 41, 41, 1);
+  border-radius: 5px;
+}
+
+.clear-button:hover {
+  color: rgba(255, 168, 0, 1);
+}
+
+.clear-button:active {
+  color: rgba(41, 41, 41, 1);
+  background-color: rgba(255, 168, 0, 1);
+  border-color: rgba(255, 168, 0, 1);
 }
