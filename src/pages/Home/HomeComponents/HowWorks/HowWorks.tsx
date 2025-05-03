@@ -7,7 +7,10 @@ import classes from "./howWorks.module.css";
 export const HowWorks = () => {
   return (
     <div id="how" className={classes["how"]}>
+      <div className={classes["how__header"]}>
       <h3 className={classes["how__title"]}>Как это работает</h3>
+      <button className={cn(classes["how__button"], "dark-button")}>Узнать больше</button>
+      </div>
       <div className={classes["how__content"]}>
         <div className={classes["how__item"]}>
           <HowFirstIcon className={classes["how__icon"]}/>
@@ -22,7 +25,7 @@ export const HowWorks = () => {
           <p className={classes["how__icon-text"]}>Огромный выбор направлений</p>
         </div>
       </div>
-      <button className={cn(classes["how__button"], "dark-button")}>Узнать больше</button>
+    
     </div>
   );
 };

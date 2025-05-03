@@ -9,11 +9,11 @@
   display: flex;
   align-items: center;
 
-  padding-left: 258px;
+  padding-left: clamp(16px, 10vw, 260px); 
   padding-top: 8px;
   height: 64px;
   font-weight: 900;
-  font-size: 36px;
+  font-size: 2.25rem;
   line-height: 100%;
 
   color: #e5e5e5;
@@ -26,16 +26,15 @@
   gap: 85px;
   height: 94px;
   background-color: #292929;
-  padding-left: 258px;
+  padding-left: clamp(16px, 10vw, 260px); 
 }
 
 .header__link {
   font-weight: 300;
-  font-size: 30px;
+  font-size: 1.875rem;
   line-height: 100%;
 
   color: #ffffff;
   cursor: pointer;
 }
-.header__banner {
-}
+

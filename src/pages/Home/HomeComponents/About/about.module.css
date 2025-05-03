@@ -1,17 +1,18 @@
 .about {
-    box-sizing: border-box;
-  height: 559px;
+  width: 100%;
+  box-sizing: border-box;
+  height: auto;
   display: flex;
   flex-direction: column;
   color: #292929;
   background-color: #ffffff;
 
-  padding: 144px 258px;
+  padding: 5% 10%;
 }
 
 .about__title {
   font-weight: 500;
-  font-size: 36px;
+  font-size: 2.25rem;
   line-height: 100%;
 
   text-transform: uppercase;
@@ -31,7 +32,7 @@
   position: relative;
   top: -3px;
   font-weight: 400;
-  font-size: 24px;
+  font-size: 1.5rem;
   line-height: 1.9rem;
 }
 .about__text-b {

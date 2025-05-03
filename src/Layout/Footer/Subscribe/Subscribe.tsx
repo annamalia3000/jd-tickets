@@ -8,10 +8,8 @@ import Google from "../../../assets/icons/google.svg?react";
 import cn from "classnames";
 import classes from "./subscribe.module.css";
 
-
-
 export const Subscribe = () => {
-  const [success, setSuccess] = useState(true);
+  const [success, setSuccess] = useState(false);
   const handleSubmit = async (formData: FormData) => {
     const email = formData.get("email") as string;
     console.log(email);
@@ -100,5 +98,4 @@ export const Subscribe = () => {
       </div>
     </div>
   );
-
 };

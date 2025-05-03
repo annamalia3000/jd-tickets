@@ -8,7 +8,7 @@
   
   .reviews__item-img {
     width: 206px;
-    height: 207px;
+
     border-radius: 50%;
     object-fit: cover;
     object-position: center;
@@ -17,6 +17,7 @@
   .reviews__item-content {
     display: flex;
     flex-direction: column;
+    font-size: 1.5rem;
     gap: 10px;
     padding-top: 28px;
   }

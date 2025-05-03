@@ -1,5 +1,6 @@
 .contacts {
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   gap: 35px;
@@ -7,13 +8,13 @@
 
 .contacts__title {
   font-weight: 500;
-  font-size: 30px;
+  font-size: 1.875rem;
   line-height: 100%;
 }
 
 .contacts__list {
   font-weight: 400;
-  font-size: 24px;
+  font-size: 1.5rem;
   line-height: 100%;
 
   display: flex;
