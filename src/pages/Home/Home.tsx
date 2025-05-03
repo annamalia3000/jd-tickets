@@ -1,3 +1,4 @@
+import { Banner } from "../../components/Banner/Banner";
 import { Loader } from "../../components/Loader/Loader";
 
 import { About } from "./HomeComponents/About/About";
@@ -8,7 +9,11 @@ import classes from "./home.module.css";
 export const Home = () => {
   return (
     <div className={classes["home"]}>
-      {/* <section className={classes['home__section']}><Direction/></section> */}
+   <Banner
+   titleThin="Вся жизнь - "
+   titleBold="путешествие!"
+   img="img/home-banner.png"
+   />
       <section className={classes["home__section"]}>
         <About />
       </section>

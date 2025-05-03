@@ -1,0 +1,38 @@
+.banner {
+  width: 100%;
+  display: flex;
+  position: relative;
+
+  height: auto;
+}
+
+.banner__img {
+  position: absolute;
+  top: -200px;
+  width: 100%;
+  z-index: -1000;
+  background-size: cover;
+  opacity: 0.9;
+  transform: scaleX(-1);
+}
+.banner__content {
+  padding: 13%;
+  position: relative;
+  display: flex;
+  z-index: 1;
+}
+
+.banner__title {
+  color: rgba(255, 255, 255, 1);
+
+  font-size: 4.5rem;
+  line-height: 100%;
+}
+
+.banner__title-thin {
+  font-weight: 100;
+}
+
+.banner__title-bold {
+  font-weight: 700;
+}

@@ -2,9 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: relative;
-
-  padding: 26px 263px 34px 253px;
+  padding: 26px 13%;
 }
 
 .footer-bottom__logo {
