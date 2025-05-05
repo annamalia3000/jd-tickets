@@ -49,6 +49,13 @@
   pointer-events: none;
 }
 
+.city__suggestions {
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+
+}
+
 .city__list {
   display: flex;
   flex-direction: column;

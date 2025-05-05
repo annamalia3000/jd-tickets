@@ -1,7 +1,5 @@
 import { Banner } from "../../components/Banner/Banner";
 
-import { Loader } from "../../components/Loader/Loader";
-
 import { About } from "./HomeComponents/About/About";
 import { HowWorks } from "./HomeComponents/HowWorks/HowWorks";
 import { Reviews } from "./HomeComponents/Reviews/Reviews";
@@ -25,7 +23,7 @@ export const Home = () => {
       <section className={classes["home__section"]}>
         <Reviews />
       </section>
-      <Loader />
+
     </div>
   );
 };

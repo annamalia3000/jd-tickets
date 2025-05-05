@@ -3,15 +3,15 @@ import LocationIcon from "../../assets/icons/location.svg?react";
 import classes from "./cityInput.module.css";
 
 type CityInputProps = {
-  value: string;
-  onChange: (value: string) => void;
+  value: CityProps;
+  onChange: (value: CityProps) => void;
   startPlaceholder?: string;
   name?: string;
 };
 
 type CityProps = {
-  _id: "string";
-  name: "string";
+  _id: string;
+  name: string;
 };
 
 export const CityInput = ({
@@ -20,14 +20,16 @@ export const CityInput = ({
   startPlaceholder = "",
   name = "",
 }: CityInputProps) => {
+  const [inputText, setInputText] = useState(value.name);
   const [suggestions, setSuggestions] = useState<CityProps[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(true);
+
   const url = import.meta.env.VITE_HOST;
-  const apiURL = `${url}/routes/cities?name=${value} `;
+  const apiURL = `${url}/routes/cities?name=${inputText} `;
 
   useEffect(() => {
     const fetchCities = async () => {
-      if (!value.trim()) {
+      if (!inputText.trim()) {
         setSuggestions([]);
         return;
       }
@@ -44,16 +46,17 @@ export const CityInput = ({
     return () => {
       clearTimeout(timeout);
     };
-  }, [value]);
+  }, [inputText]);
 
-  const handleSelect = (cityName: string) => {
-    onChange(cityName);
+  const handleSelect = (city: CityProps) => {
+    setInputText(city.name);
+    onChange(city);
     setSuggestions([]);
     setShowSuggestions(false);
   };
 
   const matchedSuggestion = suggestions.find((city: CityProps) =>
-    city.name.toLowerCase().startsWith(value.toLowerCase())
+    city.name.toLowerCase().startsWith(value.name.toLowerCase())
   );
 
   return (
@@ -61,13 +64,13 @@ export const CityInput = ({
       <div className={classes["city__ghost-text"]}>
         {value &&
         matchedSuggestion &&
-        matchedSuggestion.name.toLowerCase().startsWith(value.toLowerCase()) ? (
+        matchedSuggestion.name.toLowerCase().startsWith(value.name.toLowerCase()) ? (
           <>
             <span className={classes["city__ghost-transparent"]}>
-              {matchedSuggestion.name.slice(0, value.length)}
+              {matchedSuggestion.name.slice(0, value.name.length)}
             </span>
             <span className={classes["city__ghost-visible"]}>
-              {matchedSuggestion.name.slice(value.length)}
+              {matchedSuggestion.name.slice(value.name.length)}
             </span>
           </>
         ) : null}
@@ -77,11 +80,11 @@ export const CityInput = ({
         type="text"
         name={name}
         placeholder={startPlaceholder}
-        value={value}
+        value={inputText}
         autoComplete="off"
         className={classes["city__input"]}
         onChange={(e) => {
-          onChange(e.target.value);
+          setInputText(e.target.value);
           setShowSuggestions(true);
         }}
         onFocus={() => setShowSuggestions(true)}
@@ -93,23 +96,25 @@ export const CityInput = ({
         onKeyDown={(e) => {
           if (e.key === "Enter" && matchedSuggestion) {
             e.preventDefault();
-            handleSelect(matchedSuggestion.name);
+            handleSelect(matchedSuggestion);
           }
         }}
       />
       <LocationIcon className={classes["city__input-icon"]} />
       {suggestions.length > 0 && showSuggestions && (
-        <ul className={classes["city__list"]}>
+        <div className={classes["city__suggestions"]}>
+          <ul className={classes["city__list"]}>
           {suggestions.map((city: CityProps) => (
             <li
               key={city._id}
-              onClick={() => handleSelect(city.name)}
+              onClick={() => handleSelect(city)}
               className={classes["city__item"]}
             >
               {city.name}
             </li>
           ))}
         </ul>
+        </div>
       )}
     </div>
   );

@@ -1,15 +1,23 @@
 import { useState } from "react";
 import { CityInput } from "../CityInput/CityInput";
 import { DataInput } from "../DateInput/DateInput";
+import { formatDateToISO } from "../../hooks/useDate";
 import SwapIcon from "../../assets/icons/remove.svg?react";
 import cn from "classnames";
 import classes from "./direction.module.css";
 
+type CityProps = {
+  _id: string;
+  name: string;
+};
+
 export const Direction = () => {
-  const [fromCity, setFromCity] = useState("");
-  const [toCity, setToCity] = useState("");
+  const [fromCity, setFromCity] = useState<CityProps>({ _id: "", name: "" });
+  const [toCity, setToCity] = useState<CityProps>({ _id: "", name: "" });
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
+
+  const url = import.meta.env.VITE_HOST;
 
   const swapDirectionCity = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -17,21 +25,30 @@ export const Direction = () => {
     setToCity(fromCity);
   };
 
-  const handleSubmit = async (formData: FormData) => {
-    const directionFromCity = formData.get("fromCity") as string;
-    const directionToCity = formData.get("toCity") as string;
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-    const directionFromDate = formData.get("fromDate") as string;
-    const directionToDate = formData.get("toDate") as string;
+    const directionFromCityId = fromCity._id;
+    const directionToCityId = toCity._id;
 
-    setFromCity(directionFromCity);
-    setToCity(directionToCity);
-    setFromDate(directionFromDate);
-    setToDate(directionToDate);
+    const directionFromDate = formatDateToISO(fromDate);
+    const directionToDate = formatDateToISO(toDate);
+
+    const queryParams = new URLSearchParams({
+      from_city_id: directionFromCityId,
+      to_city_id: directionToCityId,
+      ...(directionFromDate && { date_start: directionFromDate }),
+      ...(directionToDate && { date_end: directionToDate }),
+    });
+
+    const response = await fetch(`${url}/routes?${queryParams}`);
+
+    const data = await response.json();
+    console.log("routes", data);
   };
 
   return (
-    <form action={handleSubmit} className={classes["direction"]}>
+    <form onSubmit={handleSubmit} className={classes["direction"]}>
       <div className={classes["direction__inputs"]}>
         <div className={classes["direction__city"]}>
           <h4 className={classes["direction__title"]}>Направление</h4>
@@ -68,7 +85,14 @@ export const Direction = () => {
           </div>
         </div>
       </div>
-      <button className={cn(classes["direction__button"], "shadow-button")}>найти билеты</button>
+      <button
+        type="submit"
+        className={cn(classes["direction__button"], "shadow-button")}
+      >
+        найти билеты
+      </button>
+      <input type="hidden" name="fromCity" value={fromCity._id} />
+      <input type="hidden" name="toCity" value={toCity._id} />
     </form>
   );
 };

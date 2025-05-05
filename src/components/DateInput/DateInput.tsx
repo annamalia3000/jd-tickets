@@ -62,7 +62,6 @@ export const DataInput = ({ value, onChange, name = "" }: DataInputProps) => {
               }
             }}
             locale={ru}
-           
             formatters={{
               formatCaption: (date) =>
                 date.toLocaleDateString("ru-RU", { month: "long" }),
