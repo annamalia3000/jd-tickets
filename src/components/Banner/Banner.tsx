@@ -1,18 +1,13 @@
+import { Direction } from "../Direction/Direction";
 import classes from "./banner.module.css";
 
 type BannerProps = {
   titleThin?: string;
   titleBold?: string;
   img: string;
-  children?: React.ReactNode;
 };
 
-export const Banner = ({
-  titleThin,
-  titleBold,
-  img,
-  children,
-}: BannerProps) => {
+export const Banner = ({ titleThin, titleBold, img }: BannerProps) => {
   return (
     <div className={classes["banner"]}>
       <img src={img} alt="баннер" className={classes["banner__img"]} />
@@ -22,7 +17,9 @@ export const Banner = ({
           <br />
           <span className={classes["banner__title-bold"]}>{titleBold}</span>
         </h3>
-        {children}
+        <div className={classes["banner__direction"]}>
+          <Direction />
+        </div>
       </div>
     </div>
   );

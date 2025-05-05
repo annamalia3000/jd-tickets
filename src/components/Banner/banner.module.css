@@ -7,19 +7,26 @@
 }
 
 .banner__img {
+  object-fit: cover;
   position: absolute;
-  top: -200px;
+  top: -25%;;
   width: 100%;
+  height: 125%;
   z-index: -1000;
-  background-size: cover;
+ 
   opacity: 0.9;
   transform: scaleX(-1);
 }
 .banner__content {
-  padding: 13%;
-  position: relative;
+  width: 100%;
   display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+  padding: 10% 10% 1% 10%;
+
   z-index: 1;
+  gap: 30px;
 }
 
 .banner__title {
@@ -35,4 +42,8 @@
 
 .banner__title-bold {
   font-weight: 700;
+}
+
+.banner__direction {
+  display: flex;
 }

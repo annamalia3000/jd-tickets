@@ -111,3 +111,23 @@ a {
   background-color: rgba(255, 168, 0, 1);
   border-color: rgba(255, 168, 0, 1);
 }
+
+.shadow-button {
+  cursor: pointer;
+
+}
+
+.shadow-button:hover {
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+  
+}
+
+.shadow-button:active {
+  color: rgba(255, 168, 0, 1);
+  border-color: rgba(255, 168, 0, 1);
+  background-color: transparent;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+  
+}

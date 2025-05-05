@@ -1,40 +1,74 @@
 import { useState } from "react";
 import { CityInput } from "../CityInput/CityInput";
+import { DataInput } from "../DateInput/DateInput";
 import SwapIcon from "../../assets/icons/remove.svg?react";
-
+import cn from "classnames";
 import classes from "./direction.module.css";
 
 export const Direction = () => {
-  const [from, setFrom] = useState("");
-  const [to, setTo] = useState("");
+  const [fromCity, setFromCity] = useState("");
+  const [toCity, setToCity] = useState("");
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
 
-  const swapDirection = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const swapDirectionCity = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setFrom(to);
-    setTo(from);
+    setFromCity(toCity);
+    setToCity(fromCity);
   };
 
   const handleSubmit = async (formData: FormData) => {
-    const directionFrom = formData.get("from") as string;
-    const directionTo = formData.get("to") as string;
+    const directionFromCity = formData.get("fromCity") as string;
+    const directionToCity = formData.get("toCity") as string;
 
-    setFrom(directionFrom);
-    setTo(directionTo);
+    const directionFromDate = formData.get("fromDate") as string;
+    const directionToDate = formData.get("toDate") as string;
+
+    setFromCity(directionFromCity);
+    setToCity(directionToCity);
+    setFromDate(directionFromDate);
+    setToDate(directionToDate);
   };
 
   return (
     <form action={handleSubmit} className={classes["direction"]}>
-      <h4 className={classes["direction__title"]}>Направление</h4>
       <div className={classes["direction__inputs"]}>
-        <CityInput value={from} onChange={setFrom} startPlaceholder="Откуда" name="from" />
-        <button
-          className={classes["direction__swap-button"]}
-          onClick={swapDirection}
-        >
-          <SwapIcon className={classes["direction__swap-icon"]} />
-        </button>
-        <CityInput value={to} onChange={setTo} startPlaceholder="Куда" name="to" />
+        <div className={classes["direction__city"]}>
+          <h4 className={classes["direction__title"]}>Направление</h4>
+          <div className={classes["direction__city-input"]}>
+            <CityInput
+              value={fromCity}
+              onChange={setFromCity}
+              startPlaceholder="Откуда"
+              name="fromCity"
+            />
+            <button
+              className={classes["direction__swap-button"]}
+              onClick={swapDirectionCity}
+            >
+              <SwapIcon className={classes["direction__swap-icon"]} />
+            </button>
+            <CityInput
+              value={toCity}
+              onChange={setToCity}
+              startPlaceholder="Куда"
+              name="toCity"
+            />
+          </div>
+        </div>
+        <div className={classes["direction__date"]}>
+          <h4 className={classes["direction__title"]}>Дата</h4>
+          <div className={classes["direction__date-input"]}>
+            <DataInput
+              value={fromDate}
+              onChange={setFromDate}
+              name="fromDate"
+            />
+            <DataInput value={toDate} onChange={setToDate} name="toDate" />
+          </div>
+        </div>
       </div>
+      <button className={cn(classes["direction__button"], "shadow-button")}>найти билеты</button>
     </form>
   );
 };
