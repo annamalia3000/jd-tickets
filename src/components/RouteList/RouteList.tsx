@@ -5,8 +5,9 @@ import { RouteItem } from "../RouteItem/RouteItem";
 import { PagesNum } from "../PagesNum/PagesNum";
 import { useState, useMemo } from "react";
 import cn from "classnames";
-import "./sortSelect.css";
 import classes from "./routeList.module.css";
+
+import "./sortSelect.css";
 
 type SortOption = "price" | "time" | "duration";
 
@@ -59,8 +60,8 @@ export const RouteList = () => {
           <div className={classes["route__utility-sort"]}>
             сортировать по:
             <Select
-              className={classes["route__select"]}
               classNamePrefix="sort-select"
+              className={classes["route__select"]}
               options={sortOptions}
               value={sortOptions.find((opt) => opt.value === sortBy)}
               onChange={(selected) => setSortBy(selected?.value as SortOption)}

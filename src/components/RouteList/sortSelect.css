@@ -9,13 +9,15 @@
 }
 
 .sort-select__menu {
-    box-sizing: border-box;
+  box-sizing: border-box;
   width: 100%;
   background-color: #f9f6fa;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 
   margin-top: -30px;
   border-radius: 0;
+  position: absolute;
+  left: 5px;
 }
 
 .sort-select__option {
@@ -25,14 +27,18 @@
   cursor: pointer;
   border-bottom: 1px solid rgba(229, 229, 229, 1);
 }
-
+.sort-select__option--is-selected:hover {
+  background-color: rgba(255, 202, 98, 1);
+  color: rgba(255, 255, 255, 1);
+}
 .sort-select__option--is-focused {
-  background-color: #f1f1f1;
+  background-color: rgba(255, 202, 98, 1);
+  color: rgba(255, 255, 255, 1);
 }
 
 .sort-select__option--is-selected {
   background-color: #f9f6fa;
-  font-weight: 600;
+  color: #2c2c2c;
 }
 
 .sort-select__single-value {
@@ -41,8 +47,6 @@
   line-height: 100%;
 
   color: #2c2c2c;
-
-
 }
 
 .sort-select__indicator,
