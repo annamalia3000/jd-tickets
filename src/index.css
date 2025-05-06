@@ -184,3 +184,9 @@ a {
 .sort-select__indicator-separator {
   display: none;
 }
+
+.pagination {
+  display: none;
+  list-style-type: none;
+  gap: 10px;
+}

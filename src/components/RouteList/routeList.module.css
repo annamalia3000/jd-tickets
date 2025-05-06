@@ -72,3 +72,9 @@
   align-items: center;
   gap: 40px;
 }
+
+.route__pages{
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}

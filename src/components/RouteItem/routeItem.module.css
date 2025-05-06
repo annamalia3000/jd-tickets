@@ -5,7 +5,7 @@
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(196, 196, 196, 1);
   width: 100%;
-  max-width: 1000px;
+
   margin: 0 auto;
   box-sizing: border-box;
 }
@@ -16,7 +16,7 @@
 
 .route-item__train {
   box-sizing: border-box;
-  flex: 0 0 180px;
+  flex: 0 1 200px;
   display: flex;
   flex-direction: column;
   background-color: rgba(228, 224, 233, 1);

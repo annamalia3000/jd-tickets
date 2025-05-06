@@ -1,0 +1,43 @@
+.pagesnum {
+  width: 100%;
+
+  gap: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.pagesnum__button {
+  box-sizing: border-box;
+  width: 85px;
+  height: 75px;
+  border: 2px solid rgba(196, 196, 196, 1);
+  border-radius: 5px;
+  cursor: pointer;
+  color: rgba(196, 196, 196, 1);
+  background-color: transparent;
+
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 100%;
+}
+
+.pagesnum__button:hover {
+  color: rgba(255, 168, 0, 1);
+  background-color: transparent;
+  border-color: rgba(255, 168, 0, 1);
+}
+.active {
+  border-color: rgba(255, 168, 0, 1);
+  background-color: rgba(255, 168, 0, 1);
+  color: rgba(255, 255, 255, 1);
+}
+
+.pagesnum__button-next {
+  transform: rotate(180deg);
+}
+
+.pagesnum__dots {
+  font-size: 2.5rem;
+  justify-content: center;
+  align-items: end;
+}
