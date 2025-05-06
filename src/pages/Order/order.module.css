@@ -1,0 +1,33 @@
+.order {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.order__container {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+
+  background-color: rgba(247, 245, 249, 1);
+  padding: 5% 14%;
+
+  gap: 7%;
+}
+
+.order__section {
+  width: 26%;
+  background-color: aqua;
+
+}
+
+.order__content {
+    box-sizing: border-box;
+    width: 68%;
+    display: flex
+;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+}

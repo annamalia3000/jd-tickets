@@ -42,11 +42,15 @@ export const CityInput = ({
         console.log("Ошибка загрузки городов", error);
       }
     };
-    const timeout = setTimeout(fetchCities, 1 * 1000);
+    const timeout = setTimeout(fetchCities, 0.5 * 1000);
     return () => {
       clearTimeout(timeout);
     };
   }, [inputText]);
+
+  useEffect(() => {
+    setInputText(value.name);
+  }, [value]);
 
   const handleSelect = (city: CityProps) => {
     setInputText(city.name);
@@ -101,7 +105,7 @@ export const CityInput = ({
         }}
       />
       <LocationIcon className={classes["city__input-icon"]} />
-      {suggestions.length > 0 && showSuggestions && (
+      {suggestions.length > 0 && showSuggestions &&  inputText.trim().toLowerCase() !== matchedSuggestion?.name.toLowerCase() &&(
         <div className={classes["city__suggestions"]}>
           <ul className={classes["city__list"]}>
           {suggestions.map((city: CityProps) => (

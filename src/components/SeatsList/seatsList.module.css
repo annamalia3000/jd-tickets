@@ -1,0 +1,51 @@
+.seats {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.seats__item {
+  display: flex;
+  width: 100%;
+  gap: 13px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.seats__item-title {
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 100%;
+  color: rgba(62, 60, 65, 1);
+
+}
+
+.seats__item-count {
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 100%;
+
+  color: rgba(255, 168, 0, 1);
+}
+.seats__item-text {
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 100%;
+
+  color: rgba(146, 143, 148, 1);
+}
+.seats__item-price {
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 100%;
+  color: rgba(45, 43, 47, 1);
+
+  min-width: 60px; 
+ 
+}
+
+.seats__item-icon {
+  width: 16px;
+  height: 19px;
+}

@@ -43,6 +43,7 @@ export const DataInput = ({ value, onChange, name = "" }: DataInputProps) => {
         name={name}
         ref={inputRef}
         value={value}
+        autoComplete="off"
         onClick={() => setIsOpen((prev) => !prev)}
         onChange={(e) => onChange(e.target.value)}
         className={classes["date__input"]}

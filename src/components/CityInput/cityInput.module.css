@@ -6,10 +6,13 @@
 .city__input {
   box-sizing: border-box;
   font-weight: 400;
-  font-size: 1.125rem; 
+  font-size: 1.125rem;
   line-height: 100%;
 
-   width: 323px; 
+  width: 100%;
+    min-width: 215px;
+    max-width: 322px;
+  
 
   height: 60px;
   border-radius: 3px;
@@ -21,7 +24,8 @@
 .city__ghost-text {
   position: absolute;
   top: 21px;
-  left: 11px;
+  left: 13px;
+
   font-size: 1.125rem;
   line-height: 100%;
   font-weight: 400;
@@ -53,7 +57,6 @@
   position: absolute;
   z-index: 10;
   width: 100%;
-
 }
 
 .city__list {

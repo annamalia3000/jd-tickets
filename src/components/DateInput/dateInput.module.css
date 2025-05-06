@@ -10,7 +10,9 @@
   font-size: 1.125rem;
   line-height: 100%;
 
-  width: 323px;
+  width: 100%;
+    min-width: 215px;
+    max-width: 322px;
   height: 60px;
   border-radius: 3px;
   padding: 10px;
