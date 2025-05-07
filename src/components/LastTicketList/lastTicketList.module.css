@@ -1,0 +1,21 @@
+.ticketlist {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.ticketlist__title {
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 100%;
+
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 1);
+}
+
+.ticketlist__list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}

@@ -1,0 +1,84 @@
+.ticket {
+  box-sizing: border-box;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid rgba(196, 196, 196, 1);
+  box-shadow: 0px 2px 2px 0px rgba(62, 60, 65, 0.25);
+  background-color: rgba(255, 255, 255, 1);
+  padding: 7%;
+}
+
+.ticket__direction {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 13.5%;
+}
+
+.ticket__direction-from {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: start;
+}
+.ticket__direction-to {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: end;
+}
+
+.ticket__city {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 100%;
+
+  color: rgba(41, 41, 41, 1);
+  text-transform: capitalize;
+  margin-bottom: 4px;
+}
+
+.ticket__station {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 100%;
+
+  color: rgba(146, 143, 148, 1);
+  text-transform: capitalize;
+}
+
+.ticket__options {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.ticket-icon {
+  width: 92px;
+}
+
+.ticket-price-container {
+  width: 114px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.ticket-text {
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 100%;
+
+  text-align: right;
+  color: rgba(146, 143, 148, 1);
+}
+
+.ticket-price {
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 100%;
+
+  color: rgba(255, 168, 0, 1);
+}

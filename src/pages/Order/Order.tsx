@@ -1,4 +1,5 @@
 import { Banner } from "../../components/Banner/Banner";
+import { LastTicketList } from "../../components/LastTicketList/LastTicketList";
 import { RouteList } from "../../components/RouteList/RouteList";
 import classes from "./order.module.css";
 
@@ -7,7 +8,9 @@ export const Order = () => {
     <div className={classes["order"]}>
       <Banner img="img/order-banner.png" extraClasses={true} />
       <div className={classes["order__container"]}>
-        <section className={classes["order__section"]}>боковая секция</section>
+        <section className={classes["order__section"]}>боковая секция
+        <LastTicketList/>
+        </section>
         <div className={classes["order__content"]}>
           <RouteList />
         </div>
