@@ -1,13 +1,14 @@
 import { RootState } from "../../redux/state/store";
 import { useSelector } from "react-redux";
-import Select from "react-select";
+import { SortSelect } from "./SortSelect";
 import { RouteItem } from "../RouteItem/RouteItem";
 import { PagesNum } from "../PagesNum/PagesNum";
 import { useState, useMemo } from "react";
 import cn from "classnames";
 import classes from "./routeList.module.css";
 
-import "./sortSelect.css";
+
+
 
 type SortOption = "price" | "time" | "duration";
 
@@ -59,14 +60,13 @@ export const RouteList = () => {
         <div className={classes["route__utility-vision"]}>
           <div className={classes["route__utility-sort"]}>
             сортировать по:
-            <Select
-              classNamePrefix="sort-select"
-              className={classes["route__select"]}
+           <div className={classes["route__select"]}>
+           <SortSelect
+              value={sortBy}
+              onChange={(val) => setSortBy(val as SortOption)}
               options={sortOptions}
-              value={sortOptions.find((opt) => opt.value === sortBy)}
-              onChange={(selected) => setSortBy(selected?.value as SortOption)}
-              isSearchable={false}
             />
+           </div>
           </div>
           <div className={classes["route__utility-show"]}>
             показывать по:
