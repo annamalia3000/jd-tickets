@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
 import { CityInput } from "../CityInput/CityInput";
-import { DataInput } from "../DateInput/DateInput";
+import { DateInput } from "../DateInput/DateInput";
 import { formatDateToISO } from "../../hooks/useDate";
 import SwapIcon from "../../assets/icons/remove.svg?react";
-import { useNavigate, useLocation } from "react-router-dom"; // ✅ добавлено useLocation
-import { useDispatch } from "react-redux";
-import { setRoutes, setTotalCount } from "../../redux/slicers/routesSlice";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setRoutes,
+  setTotalCount,
+  setFromDate,
+  setToDate,
+} from "../../redux/slicers/routesSlice";
+import { RootState } from "../../redux/state/store";
 import { PopUp } from "../PopUp/PopUp";
 import cn from "classnames";
 import classes from "./direction.module.css";
@@ -22,14 +28,14 @@ type DirectionProps = {
 export const Direction = ({ extraClasses }: DirectionProps) => {
   const [fromCity, setFromCity] = useState<CityProps>({ _id: "", name: "" });
   const [toCity, setToCity] = useState<CityProps>({ _id: "", name: "" });
-  const [fromDate, setFromDate] = useState("");
-  const [toDate, setToDate] = useState("");
   const [error, setError] = useState(false);
+
+  const fromDate = useSelector((state: RootState) => state.routes.fromDate);
+  const toDate = useSelector((state: RootState) => state.routes.toDate);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const location = useLocation(); 
-
+  const location = useLocation();
   const url = import.meta.env.VITE_HOST;
 
   const fetchRoutes = async (
@@ -38,17 +44,11 @@ export const Direction = ({ extraClasses }: DirectionProps) => {
     fromDate: string,
     toDate: string
   ) => {
-    const directionFromCityId = fromCity._id;
-    const directionToCityId = toCity._id;
-
-    const directionFromDate = fromDate ? formatDateToISO(fromDate) : "";
-    const directionToDate = toDate ? formatDateToISO(toDate) : "";
-
     const queryParams = new URLSearchParams({
-      from_city_id: directionFromCityId,
-      to_city_id: directionToCityId,
-      ...(directionFromDate && { date_start: directionFromDate }),
-      ...(directionToDate && { date_end: directionToDate }),
+      from_city_id: fromCity._id,
+      to_city_id: toCity._id,
+      ...(fromDate && { date_start: formatDateToISO(fromDate) }),
+      ...(toDate && { date_end: formatDateToISO(toDate) }),
     });
 
     try {
@@ -69,16 +69,16 @@ export const Direction = ({ extraClasses }: DirectionProps) => {
 
   useEffect(() => {
     const savedParams = localStorage.getItem("searchParams");
-    if (savedParams && location.pathname !== "/") { 
+    if (savedParams && location.pathname !== "/") {
       const { fromCity, toCity, fromDate, toDate } = JSON.parse(savedParams);
       setFromCity(fromCity);
       setToCity(toCity);
-      setFromDate(fromDate);
-      setToDate(toDate);
+      dispatch(setFromDate(fromDate));
+      dispatch(setToDate(toDate));
 
       fetchRoutes(fromCity, toCity, fromDate, toDate);
     }
-  }, [location.pathname]); 
+  }, [location.pathname]);
 
   const swapDirectionCity = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -108,8 +108,8 @@ export const Direction = ({ extraClasses }: DirectionProps) => {
             setError(false);
             setFromCity({ _id: "", name: "" });
             setToCity({ _id: "", name: "" });
-            setFromDate("");
-            setToDate("");
+            dispatch(setFromDate(""));
+            dispatch(setToDate(""));
           }}
           isOpen={error}
         />
@@ -145,12 +145,16 @@ export const Direction = ({ extraClasses }: DirectionProps) => {
         <div className={classes["direction__date"]}>
           <h4 className={classes["direction__title"]}>Дата</h4>
           <div className={classes["direction__date-input"]}>
-            <DataInput
+            <DateInput
               value={fromDate}
-              onChange={setFromDate}
+              onChange={(value) => dispatch(setFromDate(value))}
               name="fromDate"
             />
-            <DataInput value={toDate} onChange={setToDate} name="toDate" />
+            <DateInput
+              value={toDate}
+              onChange={(value) => dispatch(setToDate(value))}
+              name="toDate"
+            />
           </div>
         </div>
       </div>

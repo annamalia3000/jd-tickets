@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import classes from "./lastTicketList.module.css";
 
 export const LastTicketList = () => {
-    const [items, setItems] = useState<RouteProps[]>([]);
+  const [items, setItems] = useState<RouteProps[]>([]);
   const url = import.meta.env.VITE_HOST;
   const apiUrl = `${url}/routes/last`;
 
@@ -15,7 +15,7 @@ export const LastTicketList = () => {
       setItems(data);
       console.log("data", data);
     } catch (error) {
-      console.error("Ошибка запроса последних напрвлений :", error);
+      console.error("Ошибка запроса последних направлений :", error);
     }
   };
   useEffect(() => {
@@ -27,7 +27,7 @@ export const LastTicketList = () => {
       <h3 className={classes["ticketlist__title"]}>последние билеты</h3>
       <div className={classes["ticketlist__list"]}>
         {items.map((item) => (
-          <LastTicketItem key={item. departure._id} route={item} />
+          <LastTicketItem key={item.departure._id} route={item} />
         ))}
       </div>
     </div>

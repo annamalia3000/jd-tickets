@@ -6,13 +6,13 @@ import CalendarIcon from "../../assets/icons/calendar.svg?react";
 import "react-day-picker/dist/style.css";
 import classes from "./dateInput.module.css";
 
-type DataInputProps = {
+type DateInputProps = {
   value: string;
   onChange: (value: string) => void;
   name?: string;
 };
 
-export const DataInput = ({ value, onChange, name = "" }: DataInputProps) => {
+export const DateInput = ({ value, onChange, name = "" }: DateInputProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const pickerRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);

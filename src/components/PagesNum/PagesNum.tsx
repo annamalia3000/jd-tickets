@@ -34,9 +34,9 @@ export const PagesNum = ({
       }
 
       const start = Math.max(2, currentPage - 1);
-      console.log(start)
+      console.log(start);
       const end = Math.min(totalPages - 1, currentPage + 1);
-      console.log(end)
+      console.log(end);
 
       for (let i = start; i <= end; i++) {
         if (!pages.includes(i)) {
@@ -74,20 +74,28 @@ export const PagesNum = ({
 
   return (
     <div className={classes["pagesnum"]}>
-      <button
-        onClick={handlePrevPage}
-        disabled={currentPage === 1}
-        className={cn(
-          classes["pagesnum__button"],
-          classes["pagesnum__button-prev"]
-        )}
-      >
-        <Arrow />
-      </button>
+      {totalPages > 1 && (
+        <button
+          onClick={handlePrevPage}
+          disabled={currentPage === 1}
+          className={cn(
+            classes["pagesnum__button"],
+            classes["pagesnum__button-prev"]
+          )}
+        >
+          <Arrow className={classes["pagesnum__arrow"]} />
+        </button>
+      )}
 
       {generatePages().map((page, index) =>
         page === "..." ? (
-          <button key={`ellipsis-${index}`} className={cn(classes["pagesnum__dots"], classes["pagesnum__button"])}>
+          <button
+            key={`ellipsis-${index}`}
+            className={cn(
+              classes["pagesnum__dots"],
+              classes["pagesnum__button"]
+            )}
+          >
             ...
           </button>
         ) : (
@@ -103,16 +111,18 @@ export const PagesNum = ({
         )
       )}
 
-      <button
-        onClick={handleNextPage}
-        disabled={currentPage === totalPages}
-        className={cn(
-          classes["pagesnum__button"],
-          classes["pagesnum__button-next"]
-        )}
-      >
-        <Arrow />
-      </button>
+      {totalPages > 1 && (
+        <button
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+          className={cn(
+            classes["pagesnum__button"],
+            classes["pagesnum__button-next"]
+          )}
+        >
+          <Arrow />
+        </button>
+      )}
     </div>
   );
 };
