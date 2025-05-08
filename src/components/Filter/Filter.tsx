@@ -83,14 +83,13 @@ export const Filter = () => {
             <label className={classes["switch"]}>
               <input
                 type="checkbox"
-                checked={filters[key]}
+                checked={filters[key as keyof typeof filters]}
                 onChange={() => handleToggle(key as FilterKey)} 
               />
               <span className={classes["slider"]}></span>
             </label>
           </div>
-        ))}
-      </div>
+        ))}      </div>
     </div>
   );
 };
