@@ -27,7 +27,7 @@
   flex-direction: column;
   gap: 20px;
 }
-.filter__date-text {
+.filter__text {
   font-weight: 400;
   font-size: 30px;
   line-height: 100%;
@@ -78,7 +78,7 @@
   color: rgba(255, 255, 255, 1);
 }
 
-.switch {
+.filter__toggle-switch {
   position: relative;
   display: inline-block;
   width: 72px;
@@ -86,13 +86,13 @@
   cursor: pointer;
 }
 
-.switch input {
+.filter__toggle-switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-.slider {
+.filter__toggle-slider {
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -104,7 +104,7 @@
   border-radius: 20px;
 }
 
-.slider:before {
+.filter__toggle-slider:before {
   position: absolute;
   content: "";
   height: 28px;
@@ -116,11 +116,29 @@
   border-radius: 50%;
 }
 
-.switch input:checked + .slider {
+.filter__toggle-switch input:checked + .filter__toggle-slider {
   background-color: rgba(252, 220, 157, 1);
 }
 
-.switch input:checked + .slider:before {
+.filter__toggle-switch input:checked + .filter__toggle-slider:before {
   transform: translateX(48px);
   background-color: rgba(255, 168, 0, 1);
+}
+
+.filter__price{
+  box-sizing: border-box;
+    gap: 10px;
+    width: 100%;
+    display: flex
+;
+    flex-direction: column;
+    border-bottom: 1px solid rgba(229, 229, 229, 1);
+    padding: 5%;
+}
+
+.filter__price-container {
+
+}
+.filter__price-slider {
+
 }

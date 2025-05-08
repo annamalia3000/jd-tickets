@@ -1,16 +1,22 @@
-import { RootState } from "../../redux/state/store";
 import { useSelector } from "react-redux";
+import { useMemo, useState } from "react";
+import cn from "classnames";
+
+import { RootState } from "../../redux/state/store";
+
 import { SortSelect } from "./SortSelect";
 import { RouteItem } from "../RouteItem/RouteItem";
 import { PagesNum } from "../PagesNum/PagesNum";
-import { useState, useMemo } from "react";
-import cn from "classnames";
+
 import classes from "./routeList.module.css";
 
-
 type SortOption = "price" | "time" | "duration";
+
 export const RouteList = () => {
-  const { totalCount, items, filters } = useSelector((state: RootState) => state.routes);
+  const { totalCount, items, filters, priceRange } = useSelector(
+    (state: RootState) => state.routes
+  );
+
   const [sortBy, setSortBy] = useState<SortOption>("time");
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
@@ -21,16 +27,27 @@ export const RouteList = () => {
     { value: "duration", label: "длительности" },
   ];
 
-  console.log(items);
-
   const filteredItems = useMemo(() => {
-    return items.filter((item) =>
-      Object.entries(filters).every(([key, value]) => {
+    const min = filters.minPrice;
+    const max = filters.maxPrice;
+  
+    return items.filter((item) => {
+      const inFilters = Object.entries(filters).every(([key, value]) => {
+        if (key === "maxPrice" || key === "minPrice") return true;
         if (!value) return true;
         return Boolean(item.departure[key as keyof typeof item.departure]);
-      })
-    );
-  }, [items, filters]);
+      });
+  
+      const itemMin = item.min_price;
+      const topPrices = Object.values(item.departure.price_info || {}).map(
+        (section) => section.top_price      );
+      const itemMax = Math.max(...topPrices);
+
+      const inRange = itemMax >= min && itemMin <= max;
+  
+      return inFilters && inRange;
+    });
+  }, [items, filters, priceRange]);
   
 
   const sortedItems = useMemo(() => {
@@ -59,9 +76,7 @@ export const RouteList = () => {
     currentPage * itemsPerPage
   );
 
-  if (!items.length) {
-    return null;
-  }
+  if (!items.length) return null;
 
   return (
     <div className={classes["route"]}>

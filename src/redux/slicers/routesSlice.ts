@@ -13,7 +13,10 @@ type RoutesState = {
     have_first_class: boolean;
     have_wifi: boolean;
     is_express: boolean;
+    minPrice: number;
+    maxPrice: number;
   };
+  priceRange: [number, number];
 };
 
 const initialState: RoutesState = {
@@ -28,10 +31,11 @@ const initialState: RoutesState = {
     have_first_class: false,
     have_wifi: false,
     is_express: false,
+    minPrice: 0,
+    maxPrice: Infinity
   },
-};
-
-const routesSlice = createSlice({
+  priceRange: [0, Infinity],
+};const routesSlice = createSlice({
   name: "routes",
   initialState,
   reducers: {
@@ -48,11 +52,20 @@ const routesSlice = createSlice({
       state.toDate = action.payload;
     },
     setFilters(state, action) {
-      state.filters = action.payload;
+      state.filters = { ...state.filters, ...action.payload };
+    },
+    setPriceRange: (state, action: PayloadAction<[number, number]>) => {
+      state.priceRange = action.payload;
     },
   },
 });
 
-export const { setRoutes, setTotalCount, setFromDate, setToDate, setFilters } =
-  routesSlice.actions;
+export const {
+  setRoutes,
+  setTotalCount,
+  setFromDate,
+  setToDate,
+  setFilters,
+  setPriceRange,
+} = routesSlice.actions;
 export default routesSlice.reducer;
