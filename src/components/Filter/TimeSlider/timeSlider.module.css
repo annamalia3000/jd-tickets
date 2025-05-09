@@ -1,0 +1,134 @@
+.time-slider {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.time-slider__header {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.time-slider__header-title {
+  font-weight: 700;
+  font-size: 30px;
+
+  color: rgba(255, 255, 255, 1);
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.time-slider__header-icon {
+    transform: scaleX(-1);
+}
+
+.time-slider__header-button {
+  background-color: transparent;
+  border: none;
+  width: 32px;
+  height: 26px;
+}
+
+.time-slider__header-icon {
+  width: 32px;
+  height: 26px;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 1);
+}
+
+.time-slider__header-icon:hover {
+  color: rgba(255, 168, 0, 1);
+}
+
+.time-slider__content {
+    display: flex;
+    flex-direction: column;
+   gap: 40px;
+   margin-top: 20px;
+}
+
+.time-slider__content-from {
+
+}
+.time-slider__content-to {
+
+}
+
+.time-slider__content-title {
+
+font-weight: 400;
+font-size: 1.5rem;
+line-height: 100%;
+
+color: rgba(229, 229, 229, 1);
+
+}
+
+.slider-container {
+    box-sizing: border-box;
+    
+  width: 100%;
+
+}
+
+.slider-text {
+  display: flex;
+  justify-content: flex-end;
+
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 100%;
+
+  color: rgba(255, 255, 255, 1);
+}
+
+.slider-track {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.track {
+  height: 10px;
+  background: transparent;
+  border: 1px solid rgba(196, 196, 196, 1);
+  border-radius: 8px;
+  position: relative;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.track-fill {
+  position: absolute;
+  height: 100%;
+  background-color: rgba(255, 168, 0, 1);
+}
+
+.thumb {
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.thumb-value {
+  position: absolute;
+  top: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 100%;
+
+  color: rgba(255, 255, 255, 1);
+  white-space: nowrap;
+}

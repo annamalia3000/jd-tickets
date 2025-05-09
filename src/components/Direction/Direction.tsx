@@ -6,7 +6,10 @@ import SwapIcon from "../../assets/icons/remove.svg?react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setRoutes,
+  setForwardRoutes,
+  setBackwardRoutes,
+  setForwardDirection,
+  setBackwardDirection,
   setTotalCount,
   setFromDate,
   setToDate,
@@ -38,32 +41,50 @@ export const Direction = ({ extraClasses }: DirectionProps) => {
   const location = useLocation();
   const url = import.meta.env.VITE_HOST;
 
-  const fetchRoutes = async (
-    fromCity: CityProps,
-    toCity: CityProps,
-    fromDate: string,
-    toDate: string
+  const fetchDirection = async (
+    from: CityProps,
+    to: CityProps,
+    start: string,
+    end: string,
+    isForward: boolean
   ) => {
     const queryParams = new URLSearchParams({
-      from_city_id: fromCity._id,
-      to_city_id: toCity._id,
-      ...(fromDate && { date_start: formatDateToISO(fromDate) }),
-      ...(toDate && { date_end: formatDateToISO(toDate) }),
+      from_city_id: from._id,
+      to_city_id: to._id,
+      ...(start && { date_start: formatDateToISO(start) }),
+      ...(end && { date_end: formatDateToISO(end) }),
     });
 
     try {
       const response = await fetch(`${url}/routes?${queryParams}`);
       const data = await response.json();
-      dispatch(setRoutes(data.items));
-      dispatch(setTotalCount(data.total_count));
-      if (data.total_count > 0) {
-        navigate("/order");
+
+      if (isForward) {
+        dispatch(setForwardRoutes(data.items));
+        dispatch(
+          setForwardDirection({
+            fromCity: from.name,
+            toCity: to.name,
+            fromDate: start,
+            toDate: end,
+          })
+        );
       } else {
-        setError(true);
+        dispatch(setBackwardRoutes(data.items));
+        dispatch(
+          setBackwardDirection({
+            fromCity: from.name,
+            toCity: to.name,
+            fromDate: end,
+            toDate: start,
+          })
+        );
       }
+
+      return data.total_count;
     } catch (err) {
       console.error("Ошибка запроса маршрутов:", err);
-      setError(true);
+      return 0;
     }
   };
 
@@ -75,8 +96,7 @@ export const Direction = ({ extraClasses }: DirectionProps) => {
       setToCity(toCity);
       dispatch(setFromDate(fromDate));
       dispatch(setToDate(toDate));
-
-      fetchRoutes(fromCity, toCity, fromDate, toDate);
+      handleFetch(fromCity, toCity, fromDate, toDate);
     }
   }, [location.pathname]);
 
@@ -84,6 +104,24 @@ export const Direction = ({ extraClasses }: DirectionProps) => {
     e.preventDefault();
     setFromCity(toCity);
     setToCity(fromCity);
+  };
+
+  const handleFetch = async (
+    from: CityProps,
+    to: CityProps,
+    fromDate: string,
+    toDate: string
+  ) => {
+    const forwardCount = await fetchDirection(from, to, fromDate, toDate, true);
+    const backwardCount = await fetchDirection(to, from, toDate, fromDate, false);
+
+    dispatch(setTotalCount(forwardCount + backwardCount));
+
+    if (forwardCount + backwardCount > 0) {
+      navigate("/order");
+    } else {
+      setError(true);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -94,16 +132,16 @@ export const Direction = ({ extraClasses }: DirectionProps) => {
       JSON.stringify({ fromCity, toCity, fromDate, toDate })
     );
 
-    fetchRoutes(fromCity, toCity, fromDate, toDate);
+    handleFetch(fromCity, toCity, fromDate, toDate);
   };
 
   return (
     <form onSubmit={handleSubmit} className={classes["direction"]}>
       {error && (
         <PopUp
-          type={"error"}
-          textFirst={"По данному маршруту направления не найдены"}
-          textSecond={"Повторите попытку позже"}
+          type="error"
+          textFirst="По данному маршруту направления не найдены"
+          textSecond="Повторите попытку позже"
           onClose={() => {
             setError(false);
             setFromCity({ _id: "", name: "" });
@@ -164,8 +202,6 @@ export const Direction = ({ extraClasses }: DirectionProps) => {
       >
         найти билеты
       </button>
-      <input type="hidden" name="fromCity" value={fromCity._id} />
-      <input type="hidden" name="toCity" value={toCity._id} />
     </form>
   );
 };

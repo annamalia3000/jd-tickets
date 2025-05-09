@@ -5,39 +5,43 @@ type PriceInfoSection = {
 };
 
 type Departure = {
-  price_info: Record<string, PriceInfoSection>;
+  price_info?: Record<string, PriceInfoSection>;
 };
 
 type Item = {
-  min_price: number;
+  min_price?: number;
   departure: Departure;
 };
 
-export const usePrice = (items: Item[]): [number, number] => {
+export const usePrice = (
+  forwardItems: Item[] = [],
+  backwardItems: Item[] = []
+): [number, number] => {
   return useMemo(() => {
-    if (!items.length) return [0, Infinity];
+    const allItems = [...(forwardItems || []), ...(backwardItems || [])];
+
+    if (!allItems.length) return [0, Infinity];
 
     let minPrice = Infinity;
-    let maxTopPrice = -Infinity;
+    let maxPrice = -Infinity;
 
-    for (const item of items) {
+    for (const item of allItems) {
       if (typeof item.min_price === "number") {
         minPrice = Math.min(minPrice, item.min_price);
       }
 
       const topPrices = Object.values(item.departure.price_info || {})
-        .map((section) => section.top_price)
+        .map((section) => section?.top_price)
         .filter((p): p is number => typeof p === "number");
 
       if (topPrices.length) {
-        const itemMaxTop = Math.max(...topPrices);
-        maxTopPrice = Math.max(maxTopPrice, itemMaxTop);
+        maxPrice = Math.max(maxPrice, ...topPrices);
       }
     }
 
     return [
       minPrice === Infinity ? 0 : minPrice,
-      maxTopPrice === -Infinity ? 0 : maxTopPrice,
+      maxPrice === -Infinity ? 0 : maxPrice,
     ];
-  }, [items]);
+  }, [forwardItems, backwardItems]);
 };

@@ -1,30 +1,44 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setFilters } from "../../../redux/slicers/routesSlice";
+import { setFilters, setPriceRange } from "../../../redux/slicers/routesSlice";
 import { RootState } from "../../../redux/state/store";
 import { usePrice } from "../../../hooks/usePrice";
-import { setPriceRange } from "../../../redux/slicers/routesSlice";
 import { Range } from "react-range";
-import classes from "./PriceSlider.module.css";
+import classes from "./priceSlider.module.css";
 
 export const PriceSlider = () => {
   const dispatch = useDispatch();
-  const { items, filters } = useSelector((state: RootState) => state.routes);
+  const { forwardRoutes, backwardRoutes, filters, priceRange } = useSelector(
+    (state: RootState) => state.routes
+  );
 
-  const [minPrice, maxPrice] = usePrice(items);
+  const allRoutes = useMemo(() => [...forwardRoutes, ...backwardRoutes], [forwardRoutes, backwardRoutes]);
 
-  const [values, setValues] = useState<[number, number] | null>(null);
+  const [minPrice, maxPrice] = usePrice(allRoutes);
+
+  const [values, setValues] = useState<[number, number]>([
+    priceRange[0] ?? minPrice, 
+    priceRange[1] ?? maxPrice,
+  ]);
 
   useEffect(() => {
-    if (items.length > 0 && minPrice !== Infinity && maxPrice !== Infinity) {
-      dispatch(setPriceRange([minPrice, maxPrice]));
+    if (allRoutes.length > 0 && minPrice !== Infinity && maxPrice !== Infinity) {
 
-      setValues([
-        Math.max(minPrice, filters.minPrice || minPrice),
-        Math.min(maxPrice, filters.maxPrice || maxPrice),
-      ]);
+      if (minPrice !== priceRange[0] || maxPrice !== priceRange[1]) {
+        dispatch(setPriceRange([minPrice, maxPrice]));
+      }
+
+      const newValues: [number, number] = [
+        Math.max(minPrice, priceRange[0] ?? minPrice),
+        Math.min(maxPrice, priceRange[1] ?? maxPrice),
+      ];
+
+
+      if (newValues[0] !== values[0] || newValues[1] !== values[1]) {
+        setValues(newValues);
+      }
     }
-  }, [items, minPrice, maxPrice, filters.minPrice, filters.maxPrice]);
+  }, [allRoutes, minPrice, maxPrice, priceRange, dispatch]); 
 
   const handleChange = (newValues: number[]) => {
     setValues([newValues[0], newValues[1]]);

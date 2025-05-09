@@ -15,6 +15,7 @@ import WiFiIcon from "../../assets/icons/filter/wifi.svg?react";
 import ExpressIcon from "../../assets/icons/filter/express.svg?react";
 
 import { PriceSlider } from "./PriceSlider/PriceSlider";
+import { TimeSlider } from "./TimeSlider/TimeSlider";
 import classes from "./filter.module.css";
 
 type FilterKey =
@@ -101,6 +102,15 @@ export const Filter = () => {
           <span className={classes["filter__price-slider"]}>
             <PriceSlider />
           </span>
+        </div>
+      </div>
+      <div className={classes["filter__direction"]}>
+        <div className={classes["filter__direction-item"]}>
+          <TimeSlider type={"Туда"} />
+        </div>
+
+        <div className={classes["filter__direction-item"]}>
+          <TimeSlider type={"Обратно"} />
         </div>
       </div>
     </div>

@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
 import { useMemo, useState } from "react";
 import cn from "classnames";
+import { useFilters } from "../../hooks/useFilters";
 
 import { RootState } from "../../redux/state/store";
-
 import { SortSelect } from "./SortSelect";
 import { RouteItem } from "../RouteItem/RouteItem";
 import { PagesNum } from "../PagesNum/PagesNum";
@@ -13,7 +13,7 @@ import classes from "./routeList.module.css";
 type SortOption = "price" | "time" | "duration";
 
 export const RouteList = () => {
-  const { totalCount, items, filters, priceRange } = useSelector(
+  const { forwardRoutes, backwardRoutes, filters } = useSelector(
     (state: RootState) => state.routes
   );
 
@@ -27,28 +27,46 @@ export const RouteList = () => {
     { value: "duration", label: "длительности" },
   ];
 
-  const filteredItems = useMemo(() => {
-    const min = filters.minPrice;
-    const max = filters.maxPrice;
-  
-    return items.filter((item) => {
-      const inFilters = Object.entries(filters).every(([key, value]) => {
-        if (key === "maxPrice" || key === "minPrice") return true;
-        if (!value) return true;
-        return Boolean(item.departure[key as keyof typeof item.departure]);
-      });
-  
-      const itemMin = item.min_price;
-      const topPrices = Object.values(item.departure.price_info || {}).map(
-        (section) => section.top_price      );
-      const itemMax = Math.max(...topPrices);
+  const { filterByToggles, filterByPrice, filterByDateTime } = useFilters();
 
-      const inRange = itemMax >= min && itemMin <= max;
-  
-      return inFilters && inRange;
+  const filteredItems = useMemo(() => {
+    const filteredForwardRoutes = forwardRoutes.filter((item) => {
+      const matchesToggles = filterByToggles(item);
+      const matchesPrice = filterByPrice(item);
+      const matchesDepartureTime = filterByDateTime(item, "from");
+      const matchesArrivalTime = filterByDateTime(item, "from");
+
+      return (
+        matchesToggles &&
+        matchesPrice &&
+        matchesDepartureTime &&
+        matchesArrivalTime
+      );
     });
-  }, [items, filters, priceRange]);
-  
+
+    const filteredBackwardRoutes = backwardRoutes.filter((item) => {
+      const matchesToggles = filterByToggles(item);
+      const matchesPrice = filterByPrice(item);
+      const matchesDepartureTime = filterByDateTime(item, "to");
+      const matchesArrivalTime = filterByDateTime(item, "to");
+
+      return (
+        matchesToggles &&
+        matchesPrice &&
+        matchesDepartureTime &&
+        matchesArrivalTime
+      );
+    });
+
+    return [...filteredForwardRoutes, ...filteredBackwardRoutes];
+  }, [
+    forwardRoutes,
+    backwardRoutes,
+    filters,
+    filterByToggles,
+    filterByPrice,
+    filterByDateTime,
+  ]);
 
   const sortedItems = useMemo(() => {
     return [...filteredItems].sort((a, b) => {
@@ -59,10 +77,7 @@ export const RouteList = () => {
           return a.departure.duration - b.departure.duration;
         case "time":
         default:
-          return (
-            new Date(a.departure.from.datetime).getTime() -
-            new Date(b.departure.from.datetime).getTime()
-          );
+          return a.departure.from.datetime - b.departure.from.datetime;
       }
     });
   }, [filteredItems, sortBy]);
@@ -76,13 +91,13 @@ export const RouteList = () => {
     currentPage * itemsPerPage
   );
 
-  if (!items.length) return null;
+  if (!filteredItems.length) return null;
 
   return (
     <div className={classes["route"]}>
       <div className={classes["route__utility"]}>
         <div className={classes["route__utility-total"]}>
-          найдено {totalCount}
+          найдено {filteredItems.length}
         </div>
         <div className={classes["route__utility-vision"]}>
           <div className={classes["route__utility-sort"]}>

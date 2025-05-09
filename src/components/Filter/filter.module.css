@@ -142,3 +142,18 @@
 .filter__price-slider {
 
 }
+
+.filter__direction {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  
+}
+
+.filter__direction-item {
+  width: 100%;
+  box-sizing: border-box;
+    padding: 5%;
+    border-bottom: 1px solid rgba(229, 229, 229, 1);
+
+}
