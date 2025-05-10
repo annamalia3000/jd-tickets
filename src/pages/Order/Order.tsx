@@ -16,7 +16,7 @@ export const Order = () => {
   return (
     <div className={classes["order"]}>
       <Banner img="img/order-banner.png" extraClasses={true} />
-      <OrderNav activeStep={4} />
+      <OrderNav activeStep={1} />
       <div className={classes["order__container"]}>
         <section className={classes["order__section"]}>
           <Filter />

@@ -90,13 +90,12 @@ export const Direction = ({ extraClasses }: DirectionProps) => {
 
   useEffect(() => {
     const savedParams = localStorage.getItem("searchParams");
-    if (savedParams && location.pathname !== "/") {
+    if (savedParams) {
       const { fromCity, toCity, fromDate, toDate } = JSON.parse(savedParams);
       setFromCity(fromCity);
       setToCity(toCity);
       dispatch(setFromDate(fromDate));
       dispatch(setToDate(toDate));
-      handleFetch(fromCity, toCity, fromDate, toDate);
     }
   }, [location.pathname]);
 
@@ -113,12 +112,20 @@ export const Direction = ({ extraClasses }: DirectionProps) => {
     toDate: string
   ) => {
     const forwardCount = await fetchDirection(from, to, fromDate, toDate, true);
-    const backwardCount = await fetchDirection(to, from, toDate, fromDate, false);
+    const backwardCount = await fetchDirection(
+      to,
+      from,
+      toDate,
+      fromDate,
+      false
+    );
 
     dispatch(setTotalCount(forwardCount + backwardCount));
 
     if (forwardCount + backwardCount > 0) {
-      navigate("/order");
+      if (location.pathname !== "/order") {
+        navigate("/order");
+      }
     } else {
       setError(true);
     }

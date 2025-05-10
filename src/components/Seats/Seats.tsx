@@ -16,8 +16,13 @@ import NutritionIcon from "../../assets/icons/seats/nutrition.svg?react";
 import ConditionerIcon from "../../assets/icons/seats/conditioner.svg?react";
 import { useTime } from "../../hooks/useTime";
 import { useSeconds } from "../../hooks/useSeconds";
-import { clearSelectedTicket, setAdultsNumberTicket, setKidsNumberTicket, setKidsNoSeatNumberTicket } from "../../redux/slicers/selectedTicketSlice";
-
+import {
+  clearSelectedTicket,
+  setAdultsNumberTicket,
+  setKidsNumberTicket,
+  setKidsNoSeatNumberTicket,
+} from "../../redux/slicers/selectedTicketSlice";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import cn from "classnames";
 import classes from "./seats.module.css";
@@ -28,6 +33,7 @@ export const Seats = () => {
     (state: RootState) => state.selectedTicket
   );
 
+  const navigate = useNavigate();
   const [isNutritionActive, setIsNutritionActive] = useState(false);
   const [adultsNumber, setAdultsNumber] = useState(0);
   const [adultsNumberRest, setAdultsNumberRest] = useState(5);
@@ -70,8 +76,8 @@ export const Seats = () => {
     dispatch(setAdultsNumberTicket(adultsNumber));
     dispatch(setKidsNumberTicket(kidsNumber));
     dispatch(setKidsNoSeatNumberTicket(kidsNumberRest));
+    navigate("/passengers");
   };
-  
 
   if (!selectedTicket) {
     return null; // или заглушка / лоадер
@@ -372,8 +378,12 @@ export const Seats = () => {
           </div>
         </div>
       </div>
-      <button onClick={handleButtonClick}
-       className={cn(classes["seats-button"], ["shadow-button"])}>ДАЛЕЕ</button>
+      <button
+        onClick={handleButtonClick}
+        className={cn(classes["seats-button"], ["shadow-button"])}
+      >
+        ДАЛЕЕ
+      </button>
     </div>
   );
 };

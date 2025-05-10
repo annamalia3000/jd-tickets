@@ -20,6 +20,7 @@
   margin-bottom: 5px;
   cursor: pointer;
   caret-color: transparent;
+  border-color: rgba(146, 143, 148, 1);
 }
 
 .date__input-icon {

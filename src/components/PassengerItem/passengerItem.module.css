@@ -3,8 +3,8 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  width: 960px;
-  height: 830px;
+
+  height: auto;
   background-color: rgba(255, 255, 255, 1);
   border: 1px solid rgba(146, 143, 148, 1);
 }
@@ -52,8 +52,8 @@
 }
 
 .passenger-form__select {
-    box-sizing: border-box;
-    width: 280px;
+  box-sizing: border-box;
+  width: 280px;
   font-weight: 400;
   font-size: 1.5rem;
   line-height: 100%;
@@ -62,14 +62,17 @@
   border: 1px solid rgba(146, 143, 148, 1);
   border-radius: 5px;
   position: relative;
+
+  
 }
 
 .passenger-form__select-icon {
-    position: absolute;
-    right: 10px;
-    top: 20px;
+  position: absolute;
+  right: 10px;
+  top: 20px;
 }
 .passenger-form__info {
+
   padding: 4%;
   width: 100%;
   box-sizing: border-box;
@@ -77,12 +80,14 @@
 }
 
 .passenger-form__name {
+    margin-top: 20px;
   display: flex;
   gap: 20px;
+  margin-bottom: 20px;
 }
 .passenger-form-input {
-     box-sizing: border-box;
-       width: 280px;
+  box-sizing: border-box;
+  width: 280px;
   font-weight: 400;
   font-size: 1.5rem;
   line-height: 100%;
@@ -96,18 +101,115 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  font-family: Roboto;
+ 
   font-weight: 400;
   font-size: 16px;
   line-height: 100%;
-  letter-spacing: 0%;
+
   color: rgba(146, 143, 148, 1);
+}
+
+.passenger-form__sex-age {
+  display: flex;
+  gap: 30px;
+}
+.passenger-form__sex {
+  display: flex;
+  flex-direction: column;
+}
+.gender-radio {
+  display: none;
+}
+
+.gender-buttons {
+  display: flex;
+  border: 1px solid rgba(146, 143, 148, 1);
+  border-radius: 5px;
+      margin-top: 14px;
+
+}
+
+.gender-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 102px;
+  height: 50px;
+  background-color: transparent;
+  border: none;
+  color: rgba(0, 0, 0, 1);
+
+  font-weight: 900;
+  font-size: 30px;
+  line-height: 100%;
+
+  text-transform: uppercase;
+
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+}
+
+.gender-radio:checked + .gender-label {
+  background-color: rgba(255, 168, 0, 1);
+
+  border-color: rgba(255, 168, 0, 1);
+}
+
+.passenger-form__limitation {
+  display: flex;
+ font-weight: 400;
+  font-size: 18px;
+  line-height: 100%;
+
+  color: rgba(41, 41, 41, 1);
+  margin-top: 20px
+}
+
+
+.passenger-form__docs-container {
+  border-bottom: 1px solid rgba(146, 143, 148, 1);
+
 }
 
 .passenger-form__docs {
   display: flex;
-  flex-direction: column;
+   padding: 4%;
+   gap: 30px;
+   align-items: center;
 }
 
-.passenger-form__limitation {
+.passenger-form__passport-input {
+  display: flex;
+
+   gap: 30px;
+   align-items: center;
+   
+}
+
+
+
+.passenger-form-button-container {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 4%;
+  display: flex;
+  justify-content: flex-end;
+  
+}
+.passenger-form-button {
+
+font-weight: 700;
+font-size: 1.5rem;
+line-height: 100%;
+
+text-align: center;
+
+color:rgba(41, 41, 41, 1);
+background-color: transparent;
+border: 1px solid rgba(41, 41, 41, 1);
+border-radius: 5px;
+
+
+padding: 1%;
 }
