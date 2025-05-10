@@ -4,7 +4,7 @@ import cn from "classnames";
 import { useFilters } from "../../hooks/useFilters";
 
 import { RootState } from "../../redux/state/store";
-import { SortSelect } from "./SortSelect";
+import { SelectComponent } from "../Select/SelectComponent";
 import { RouteItem } from "../RouteItem/RouteItem";
 import { PagesNum } from "../PagesNum/PagesNum";
 
@@ -103,7 +103,7 @@ export const RouteList = () => {
           <div className={classes["route__utility-sort"]}>
             сортировать по:
             <div className={classes["route__select"]}>
-              <SortSelect
+              <SelectComponent
                 value={sortBy}
                 onChange={(val) => setSortBy(val as SortOption)}
                 options={sortOptions}

@@ -32,10 +32,9 @@
   color: rgba(41, 41, 41, 1);
 }
 .passenger-form__header-open-button {
-    width: 32px;
-    background-color: transparent;
-    border: none;
-
+  width: 32px;
+  background-color: transparent;
+  border: none;
 }
 .passenger-form__header-icon {
   width: 32px;
@@ -52,12 +51,23 @@
   color: rgba(255, 168, 0, 1);
 }
 
-.passenger-form-text {
+.passenger-form__select {
+    box-sizing: border-box;
+    width: 280px;
   font-weight: 400;
   font-size: 1.5rem;
   line-height: 100%;
 
   color: rgba(41, 41, 41, 1);
+  border: 1px solid rgba(146, 143, 148, 1);
+  border-radius: 5px;
+  position: relative;
+}
+
+.passenger-form__select-icon {
+    position: absolute;
+    right: 10px;
+    top: 20px;
 }
 .passenger-form__info {
   padding: 4%;
@@ -67,15 +77,20 @@
 }
 
 .passenger-form__name {
-    display: flex;
-    gap: 20px;
+  display: flex;
+  gap: 20px;
 }
 .passenger-form-input {
+     box-sizing: border-box;
+       width: 280px;
   font-weight: 400;
   font-size: 1.5rem;
   line-height: 100%;
 
   color: rgba(41, 41, 41, 1);
+  border: 1px solid rgba(146, 143, 148, 1);
+  border-radius: 5px;
+  padding: 5px;
 }
 .passenger-form-label {
   display: flex;
@@ -87,6 +102,11 @@
   line-height: 100%;
   letter-spacing: 0%;
   color: rgba(146, 143, 148, 1);
+}
+
+.passenger-form__docs {
+  display: flex;
+  flex-direction: column;
 }
 
 .passenger-form__limitation {

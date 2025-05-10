@@ -5,7 +5,7 @@ type Option = {
   label: string;
 };
 
-type SortSelectProps = {
+type SelectProps = {
   value: string;
   onChange: (value: string) => void;
   options: Option[];
@@ -58,7 +58,7 @@ const selectStyles: StylesConfig<Option, false> = {
   }),
 };
 
-export const SortSelect = ({ value, onChange, options }: SortSelectProps) => {
+export const SelectComponent = ({ value, onChange, options }: SelectProps) => {
   const selectedOption = options.find((opt) => opt.value === value) ?? null;
 
   const handleChange = (option: SingleValue<Option>) => {

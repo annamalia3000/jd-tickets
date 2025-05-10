@@ -34,36 +34,28 @@ export const useFilters = () => {
     return itemMaxPrice >= minPrice && itemMinPrice <= maxPrice;
   };
 
+  const filterByDateTime = (
+    item: RouteProps,
+    direction: "from" | "to"
+  ): boolean => {
+    const departureTime = item.departure.from.datetime;
+    const arrivalTime = item.departure.to.datetime;
 
-const filterByDateTime = (
-  item: RouteProps,
-  direction: "from" | "to"
-): boolean => {
-  // Получаем значения времени для отправления и прибытия в секундах
-  const departureTime = item.departure.from.datetime;
-  const arrivalTime = item.departure.to.datetime;
+    const departureTimeInMinutes = Math.floor(departureTime / 60) % 1440;
+    const arrivalTimeInMinutes = Math.floor(arrivalTime / 60) % 1440;
 
-  // Преобразуем в минуты и приводим в рамки 0-1440
-  const departureTimeInMinutes = Math.floor(departureTime / 60) % 1440;
-  const arrivalTimeInMinutes = Math.floor(arrivalTime / 60) % 1440;
+    const directionFilters = filters[direction];
 
-  // Фильтры для времени отправления и прибытия
-  const directionFilters = filters[direction];
+    const matchesDepartureTime =
+      departureTimeInMinutes >= (directionFilters.minTimeDepature ?? 0) &&
+      departureTimeInMinutes <= (directionFilters.maxTimeDepature ?? 1440);
 
-  // Проверка, соответствует ли время отправления фильтрам
-  const matchesDepartureTime =
-    departureTimeInMinutes >= (directionFilters.minTimeDepature ?? 0) &&
-    departureTimeInMinutes <= (directionFilters.maxTimeDepature ?? 1440);
+    const matchesArrivalTime =
+      arrivalTimeInMinutes >= (directionFilters.minTimeArrival ?? 0) &&
+      arrivalTimeInMinutes <= (directionFilters.maxTimeArrival ?? 1440);
 
-  // Проверка, соответствует ли время прибытия фильтрам
-  const matchesArrivalTime =
-    arrivalTimeInMinutes >= (directionFilters.minTimeArrival ?? 0) &&
-    arrivalTimeInMinutes <= (directionFilters.maxTimeArrival ?? 1440);
-
-  // Возвращаем true, если оба времени соответствуют фильтрам
-  return matchesDepartureTime && matchesArrivalTime;
-};
-
+    return matchesDepartureTime && matchesArrivalTime;
+  };
 
   return {
     filterByToggles,
