@@ -5,6 +5,8 @@ import { Seats } from "../../components/Seats/Seats";
 import { RouteList } from "../../components/RouteList/RouteList";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/state/store";
+import { OrderNav } from "../../components/OrderNav/OrderNav";
+
 import classes from "./order.module.css";
 
 export const Order = () => {
@@ -14,6 +16,7 @@ export const Order = () => {
   return (
     <div className={classes["order"]}>
       <Banner img="img/order-banner.png" extraClasses={true} />
+      <OrderNav activeStep={4} />
       <div className={classes["order__container"]}>
         <section className={classes["order__section"]}>
           <Filter />
