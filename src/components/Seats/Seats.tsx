@@ -14,6 +14,10 @@ import WifiIcon from "../../assets/icons/seats/wi-fi.svg?react";
 import LinenIcon from "../../assets/icons/seats/linen.svg?react";
 import NutritionIcon from "../../assets/icons/seats/nutrition.svg?react";
 import ConditionerIcon from "../../assets/icons/seats/conditioner.svg?react";
+import TooltipConIcon from "../../assets/icons/seats/clue-cond.svg?react";
+import TooltipWiFiIcon from "../../assets/icons/seats/clue-wifi.svg?react";
+import TooltipLinenIcon from "../../assets/icons/seats/clue-linen.svg?react";
+import TooltipNutIcon from "../../assets/icons/seats/clue-nut.svg?react";
 import { useTime } from "../../hooks/useTime";
 import { useSeconds } from "../../hooks/useSeconds";
 import {
@@ -40,13 +44,19 @@ export const Seats = () => {
 
   const [kidsNumber, setKidsNumber] = useState(0);
   const [kidsNumberRest, setKidsNumberRest] = useState(4);
-   const [kidsNumberNoPlace, setKidsNumberNoPlace] = useState(0);
+  const [kidsNumberNoPlace, setKidsNumberNoPlace] = useState(0);
 
   const currentClassType = seats[0]?.coach.class_type;
 
   const priceInfo = selectedTicket?.departure.price_info;
-  const topPrice = priceInfo?.[currentClassType]?.top_price;
-  const bottomPrice = priceInfo?.[currentClassType]?.bottom_price;
+  const topPrice =
+    currentClassType && priceInfo
+      ? priceInfo[currentClassType as keyof typeof priceInfo]?.top_price
+      : undefined;
+  const bottomPrice =
+    currentClassType && priceInfo
+      ? priceInfo[currentClassType as keyof typeof priceInfo]?.bottom_price
+      : undefined;
 
   const duration = useSeconds(selectedTicket?.departure?.duration ?? 0);
 
@@ -179,8 +189,8 @@ export const Seats = () => {
 
             <div className={classes["seats__count-button-container"]}>
               <button
-              onClick={() => {
-               setKidsNumberNoPlace(kidsNumberNoPlace + 1)
+                onClick={() => {
+                  setKidsNumberNoPlace(kidsNumberNoPlace + 1);
                 }}
                 className={cn(classes["seats__count-button"], ["yel-button"])}
               >
@@ -339,41 +349,61 @@ export const Seats = () => {
                         ]
                       }
                     >
-                      <button
-                        className={cn(classes["service-option"], {
-                          [classes["included-option"]]:
-                            seats[0]?.coach.have_air_conditioning,
-                        })}
-                      >
-                        <ConditionerIcon />
-                      </button>
+                      <div className={classes["service-option-wrapper"]}>
+                        <button
+                          className={cn(classes["service-option"], {
+                            [classes["included-option"]]:
+                              seats[0]?.coach.have_air_conditioning,
+                          })}
+                        >
+                          <ConditionerIcon />
+                        </button>
+                        <div className={classes["tooltip"]}>
+                          <TooltipConIcon />
+                        </div>
+                      </div>
 
-                      <button
-                        className={cn(classes["service-option"], {
-                          [classes["included-option"]]:
-                            seats[0]?.coach.have_wifi,
-                        })}
-                      >
-                        <WifiIcon />
-                      </button>
+                      <div className={classes["service-option-wrapper"]}>
+                        <button
+                          className={cn(classes["service-option"], {
+                            [classes["included-option"]]:
+                              seats[0]?.coach.have_wifi,
+                          })}
+                        >
+                          <WifiIcon />
+                        </button>
+                        <div className={classes["tooltip"]}>
+                          <TooltipWiFiIcon />
+                        </div>
+                      </div>
 
-                      <button
-                        className={cn(classes["service-option"], {
-                          [classes["included-option"]]:
-                            seats[0]?.coach.is_linens_included,
-                        })}
-                      >
-                        <LinenIcon />
-                      </button>
+                      <div className={classes["service-option-wrapper"]}>
+                        <button
+                          className={cn(classes["service-option"], {
+                            [classes["included-option"]]:
+                              seats[0]?.coach.is_linens_included,
+                          })}
+                        >
+                          <LinenIcon />
+                        </button>
+                        <div className={classes["tooltip"]}>
+                          <TooltipLinenIcon />
+                        </div>
+                      </div>
 
-                      <button
-                        onClick={() => setIsNutritionActive((prev) => !prev)}
-                        className={cn(classes["service-option"], {
-                          [classes["active-option"]]: isNutritionActive,
-                        })}
-                      >
-                        <NutritionIcon />
-                      </button>
+                      <div className={classes["service-option-wrapper"]}>
+                        <button
+                          onClick={() => setIsNutritionActive((prev) => !prev)}
+                          className={cn(classes["service-option"], {
+                            [classes["active-option"]]: isNutritionActive,
+                          })}
+                        >
+                          <NutritionIcon />
+                        </button>
+                        <div className={classes["tooltip"]}>
+                          <TooltipNutIcon />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

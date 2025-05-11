@@ -346,3 +346,25 @@
   border: 1px solid rgba(255, 168, 0, 1);
   border-radius: 5px;
 }
+
+.service-option-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip {
+  position: absolute;
+  top: 100%; 
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 6px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 10;
+}
+
+.service-option-wrapper:hover .tooltip {
+  opacity: 1;
+  pointer-events: auto;
+}
