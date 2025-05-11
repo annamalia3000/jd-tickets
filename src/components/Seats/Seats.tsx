@@ -35,11 +35,12 @@ export const Seats = () => {
 
   const navigate = useNavigate();
   const [isNutritionActive, setIsNutritionActive] = useState(false);
-  const [adultsNumber, setAdultsNumber] = useState(0);
-  const [adultsNumberRest, setAdultsNumberRest] = useState(5);
+  const [adultsNumber, setAdultsNumber] = useState(1);
+  const [adultsNumberRest, setAdultsNumberRest] = useState(4);
 
   const [kidsNumber, setKidsNumber] = useState(0);
   const [kidsNumberRest, setKidsNumberRest] = useState(4);
+   const [kidsNumberNoPlace, setKidsNumberNoPlace] = useState(0);
 
   const currentClassType = seats[0]?.coach.class_type;
 
@@ -75,7 +76,7 @@ export const Seats = () => {
   const handleButtonClick = () => {
     dispatch(setAdultsNumberTicket(adultsNumber));
     dispatch(setKidsNumberTicket(kidsNumber));
-    dispatch(setKidsNoSeatNumberTicket(kidsNumberRest));
+    dispatch(setKidsNoSeatNumberTicket(kidsNumberNoPlace));
     navigate("/passengers");
   };
 
@@ -178,9 +179,12 @@ export const Seats = () => {
 
             <div className={classes["seats__count-button-container"]}>
               <button
+              onClick={() => {
+               setKidsNumberNoPlace(kidsNumberNoPlace + 1)
+                }}
                 className={cn(classes["seats__count-button"], ["yel-button"])}
               >
-                Детских «без места» — 0
+                Детских «без места» — {kidsNumberNoPlace}
               </button>
             </div>
           </div>

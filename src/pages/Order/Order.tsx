@@ -13,6 +13,8 @@ export const Order = () => {
   const selectedTicket = useSelector(
     (state: RootState) => state.selectedTicket
   );
+    const isSelectedTicketValid = selectedTicket?.departure?._id !== "" && selectedTicket?.arrival?._id !== "";
+
   return (
     <div className={classes["order"]}>
       <Banner img="img/order-banner.png" extraClasses={true} />
@@ -23,7 +25,7 @@ export const Order = () => {
           <LastTicketList />
         </section>
         <div className={classes["order__content"]}>
-          {selectedTicket ? <Seats /> : <RouteList />}
+          {isSelectedTicketValid ? <Seats /> : <RouteList />}
         </div>
       </div>
     </div>

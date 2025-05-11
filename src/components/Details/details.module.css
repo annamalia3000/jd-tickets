@@ -1,0 +1,218 @@
+.details {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: rgba(62, 60, 65, 1);
+  margin-bottom: 40px;
+  color: rgba(229, 229, 229, 1);
+}
+
+.details-title {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 100%;
+
+  text-transform: uppercase;
+
+  border-bottom: 1px solid rgba(229, 229, 229, 1);
+  padding: 5%;
+}
+
+.details__direction {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(229, 229, 229, 1);
+  padding: 5%;
+}
+
+.details__section-header {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.details__section-title {
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 100%;
+  margin-left: 10px;
+}
+
+.details-icon {
+  width: 20px;
+
+  cursor: pointer;
+  color: rgba(255, 255, 255, 1);
+}
+
+.details-icon:hover {
+  color: rgba(255, 168, 0, 1);
+}
+
+.details__train {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 30px;
+  gap: 20px;
+}
+
+.details__train-text-tiny {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 100%;
+  color: rgba(229, 229, 229, 1);
+}
+
+.details__train-text-grey {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 100%;
+  color: rgba(146, 143, 148, 1);
+}
+
+.details__train-text-bold {
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 100%;
+
+  color: rgba(255, 255, 255, 1);
+}
+
+.details__train-text-right {
+  text-align: right;
+}
+.details__train-text-bold-city {
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 100%;
+
+  text-align: right;
+  text-transform: capitalize;
+
+  color: rgba(255, 255, 255, 1);
+}
+.details__train-number {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.details__train-name {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.details__train-name-container {
+  display: flex;
+  flex-direction: column;
+}
+.details__train-time {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.details__train-item {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.details__train-time-duration {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.details__train-city {
+     width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-transform: capitalize;
+}
+
+.details-passsengers {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+ flex-direction: column;
+  padding: 5%;
+   border-bottom: 1px solid rgba(229, 229, 229, 1);
+}
+
+.details__passengers-info {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.details__passengers-adults {
+    text-transform: capitalize;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.details__passengers-kids {
+     text-transform: capitalize;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.details__total {
+    width: 100%;
+  box-sizing: border-box;
+  display: flex;
+ justify-content: space-between;
+ align-items: baseline;
+  padding: 5%;
+
+}
+
+.details__total-text{
+
+font-weight: 700;
+font-size: 30px;
+line-height: 100%;
+
+text-transform: uppercase;
+
+    color: rgba(255, 255, 255, 1)
+}
+
+.details__total-price{
+
+font-weight: 700;
+font-size: 3rem;
+line-height: 100%;
+letter-spacing: 0%;
+
+
+    color: rgba(255, 168, 0, 1)
+}
+
+
+.details__total-icon {
+    width: 26px;
+    height: 32px;
+    color: rgba(229, 229, 229, 1)
+}

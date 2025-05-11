@@ -6,12 +6,14 @@ import ArrowYelIcon from "../../assets/icons/arrow3.svg?react";
 import { useTime } from "../../hooks/useTime";
 import { RouteProps } from "../../types/types";
 import { setSeats } from "../../redux/slicers/seatsSlice";
-import classes from "./routeItem.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/state/store";
 import { setSelectedTicket } from "../../redux/slicers/selectedTicketSlice";
+import { PopUp } from "../PopUp/PopUp";
 
+import { useState } from "react";
 import cn from "classnames";
+import classes from "./routeItem.module.css";
 
 const useFormattedTime = (
   datetime: number | undefined,
@@ -23,6 +25,7 @@ const useFormattedTime = (
 
 const url = import.meta.env.VITE_HOST;
 export const RouteItem = ({ route }: { route: RouteProps }) => {
+    const [error, setError] = useState(false);
   const seats = route.departure.available_seats_info;
   const price = route.departure.price_info;
   const train = route.departure.train;
@@ -60,11 +63,23 @@ export const RouteItem = ({ route }: { route: RouteProps }) => {
       console.log("Билет",route);
     } catch (err) {
       console.error("Ошибка при загрузке мест:", err);
+      setError(true);
     }
   };
 
   return (
     <div className={classes["route-item"]}>
+      {error && (
+              <PopUp
+                type="error"
+                textFirst="Произошла ошибка загрузки данных"
+                textSecond="Повторите попытку позже"
+                onClose={() => {
+                  setError(false);
+                }}
+                isOpen={error}
+              />
+            )}
       <div className={classes["route-item__train"]}>
         <TrainIcon className={classes["route-item__train-icon"]} />
         <span className={classes["route-item__train-name"]}>{train.name}</span>

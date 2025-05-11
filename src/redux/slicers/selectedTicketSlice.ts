@@ -150,7 +150,7 @@ const selectedTicketSlice = createSlice({
     setSelectedTicket: (_state, action: PayloadAction<SelectedTicketState>) => {
       return action.payload;
     },
-    clearSelectedTicket: () => null,
+    clearSelectedTicket: () => initialState,
     setAdultsNumberTicket: (state, action: PayloadAction<number>) => {
       state.adults = action.payload;
     },

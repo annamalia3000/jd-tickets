@@ -1,13 +1,15 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import routesReducer from "../slicers/routesSlice";
 import seatsReducer from "../slicers/seatsSlice";
-import selectedTicketSlice from "../slicers/selectedTicketSlice";
+import selectedReducer from "../slicers/selectedTicketSlice";
+import orderReducer from "../slicers/orderSlice";
 
 
 const rootReducer = combineReducers({
   routes: routesReducer,
   seats: seatsReducer,
-  selectedTicket: selectedTicketSlice
+  selectedTicket: selectedReducer,
+  order:  orderReducer
 
 });
 

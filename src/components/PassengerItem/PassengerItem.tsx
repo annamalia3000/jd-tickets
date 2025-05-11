@@ -3,21 +3,64 @@ import MinusIcon from "../../assets/icons/pas-minus.svg?react";
 import PlusIcon from "../../assets/icons/pas-plus.svg?react";
 import CrossIcon from "../../assets/icons/cross.svg?react";
 import SelectIcon from "../../assets/icons/select-arrow.svg?react";
+import ErrorIcon from "../../assets/icons/error.svg?react";
 import { DateInput } from "../DateInput/DateInput";
 import { SelectComponent } from "../Select/SelectComponent";
 import cn from "classnames";
 import classes from "./passengerItem.module.css";
+type Data = {
+  coach_id: string;
+  person_info: PersonInfo;
+  seat_number: number;
+  is_child: boolean;
+  include_children_seat: boolean;
+};
+
+type PersonInfo = {
+  is_adult: boolean;
+  first_name: string;
+  last_name: string;
+  patronymic: string;
+  gender: boolean;
+  birthday: string;
+  document_type: string;
+  document_data: string;
+};
+
 type PassengerProps = {
   index: number;
   onRemove: () => void;
+  initialType: "adult" | "child";
+  onValidationChange: (isValid: boolean) => void;
+  onDataReady: (data: Data) => void;
 };
 
-export const PassengerItem = ({ index = 1, onRemove }: PassengerProps) => {
+export const PassengerItem = ({
+  index,
+  onRemove,
+  initialType,
+  onValidationChange,
+  onDataReady,
+}: PassengerProps) => {
   const [docType, setDocType] = useState("passport");
-  const [passengerType, setPassengerType] = useState("adult");
+  const [passengerType, setPassengerType] = useState<"adult" | "child">(
+    initialType
+  );
+
+  const [lastName, setLastName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [middleName, setMiddleName] = useState("");
+  const [gender, setGender] = useState<"M" | "F" | "">("M");
+  const [birthDate, setBirthDate] = useState("");
+
+  const [passportSeries, setPassportSeries] = useState("");
+  const [passportNumber, setPassportNumber] = useState("");
+  const [passportError, setPassportError] = useState("");
 
   const [birthCertNumber, setBirthCertNumber] = useState("");
   const [birthCertError, setBirthCertError] = useState("");
+
+  const [formError, setFormError] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
   const passengerTypeOptions = [
@@ -36,21 +79,94 @@ export const PassengerItem = ({ index = 1, onRemove }: PassengerProps) => {
     }
   }, [passengerType]);
 
-  const toggleOpen = () => setIsOpen(!isOpen);
+  const toggleOpen = () => setIsOpen((prev) => !prev);
 
-  const handleBirthCertChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.toUpperCase();
-    setBirthCertNumber(value);
+  const validatePassport = (series: string, number: string) => {
+    const seriesValid = /^\d{4}$/.test(series);
+    const numberValid = /^\d{6}$/.test(number);
 
+    if (!seriesValid || !numberValid) {
+      setPassportError("Серия должна содержать 4 цифры, номер — 6 цифр");
+      return false;
+    } else {
+      setPassportError("");
+      return true;
+    }
+  };
+
+  const validateBirthCert = (value: string) => {
     const regex = /^[IVXLCDM]{1,4}-[А-Я]{2}-\d{6}$/;
     if (!regex.test(value)) {
       setBirthCertError(
         "Номер свидетельства о рождении указан некорректно. Пример: VIII-ВП-123456"
       );
+      return false;
     } else {
       setBirthCertError("");
+      return true;
     }
   };
+
+  const handleSubmit = () => {
+    let isValid = true;
+
+    if (!lastName || !firstName || !middleName) {
+      setFormError("Пожалуйста, заполните ФИО");
+      isValid = false;
+    } else if (!birthDate) {
+      setFormError("Пожалуйста, укажите дату рождения");
+      isValid = false;
+    } else {
+      setFormError("");
+    }
+
+    if (docType === "passport") {
+      const docValid = validatePassport(passportSeries, passportNumber);
+      isValid = isValid && docValid;
+    } else {
+      const docValid = validateBirthCert(birthCertNumber);
+      isValid = isValid && docValid;
+    }
+
+    onValidationChange(isValid);
+
+    if (isValid) {
+      const data = {
+        coach_id: "12341", //заглушка
+        seat_number: 10, //заглушка
+        is_child: passengerType === "child",
+        include_children_seat: true, //заглушка - если это kid, то true
+        person_info: {
+          is_adult: passengerType === "adult",
+          first_name: firstName,
+          last_name: lastName,
+          patronymic: middleName,
+          gender: gender === "M",
+          birthday: birthDate,
+          document_type:
+            docType === "passport" ? "паспорт" : "свидетельство о рождении",
+          document_data:
+            docType === "passport"
+              ? `${passportSeries} ${passportNumber}`
+              : birthCertNumber,
+        },
+      };
+      onDataReady(data);
+    }
+  };
+
+  const handleSeriesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassportSeries(e.target.value);
+  };
+
+  const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassportNumber(e.target.value);
+  };
+
+  const handleBirthCertChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setBirthCertNumber(e.target.value.toUpperCase());
+  };
+
   return (
     <form className={classes["passenger-form"]}>
       <div className={classes["passenger-form__header"]}>
@@ -96,7 +212,8 @@ export const PassengerItem = ({ index = 1, onRemove }: PassengerProps) => {
                   type="text"
                   placeholder="Фамилия"
                   className={classes["passenger-form-input"]}
-                  required
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
                 />
               </label>
               <label className={classes["passenger-form-label"]}>
@@ -105,7 +222,8 @@ export const PassengerItem = ({ index = 1, onRemove }: PassengerProps) => {
                   type="text"
                   placeholder="Имя"
                   className={classes["passenger-form-input"]}
-                  required
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
                 />
               </label>
               <label className={classes["passenger-form-label"]}>
@@ -114,7 +232,8 @@ export const PassengerItem = ({ index = 1, onRemove }: PassengerProps) => {
                   type="text"
                   placeholder="Отчество"
                   className={classes["passenger-form-input"]}
-                  required
+                  value={middleName}
+                  onChange={(e) => setMiddleName(e.target.value)}
                 />
               </label>
             </div>
@@ -129,7 +248,9 @@ export const PassengerItem = ({ index = 1, onRemove }: PassengerProps) => {
                     name={`gender-${index}`}
                     value="M"
                     className={classes["gender-radio"]}
-                    checked
+                    checked={gender === "M"}
+                    onChange={() => setGender("M")}
+
                   />
                   <label
                     htmlFor={`male-${index}`}
@@ -137,13 +258,14 @@ export const PassengerItem = ({ index = 1, onRemove }: PassengerProps) => {
                   >
                     М
                   </label>
-
                   <input
                     type="radio"
                     id={`female-${index}`}
                     name={`gender-${index}`}
                     value="F"
                     className={classes["gender-radio"]}
+                    checked={gender === "F"}
+                    onChange={() => setGender("F")}
                   />
                   <label
                     htmlFor={`female-${index}`}
@@ -157,12 +279,9 @@ export const PassengerItem = ({ index = 1, onRemove }: PassengerProps) => {
               <div className={classes["passenger-form-age"]}>
                 <label className={classes["passenger-form-label"]}>
                   <span>Дата рождения</span>
-
                   <DateInput
-                    value={""}
-                    onChange={(val) => {
-                      console.log("Дата:", val);
-                    }}
+                    value={birthDate}
+                    onChange={(val) => setBirthDate(val)}
                   />
                 </label>
               </div>
@@ -175,6 +294,7 @@ export const PassengerItem = ({ index = 1, onRemove }: PassengerProps) => {
               </label>
             </div>
           </div>
+
           <div className={classes["passenger-form__docs-container"]}>
             <div className={classes["passenger-form__docs"]}>
               <div className={classes["passenger-form__select"]}>
@@ -195,40 +315,45 @@ export const PassengerItem = ({ index = 1, onRemove }: PassengerProps) => {
                     placeholder="  __ __ __ __"
                     minLength={4}
                     maxLength={4}
+                    value={passportSeries}
+                    onChange={handleSeriesChange}
                     className={classes["passenger-form-input"]}
-                    required
                   />
                   <input
                     type="text"
                     placeholder="  __ __ __ __ __ __"
                     minLength={6}
                     maxLength={6}
+                    value={passportNumber}
+                    onChange={handleNumberChange}
                     className={classes["passenger-form-input"]}
-                    required
                   />
                 </div>
               ) : (
-                <>
-                  <input
-                    type="text"
-                    placeholder="12 символов"
-                    value={birthCertNumber}
-                    onChange={handleBirthCertChange}
-                    className={classes["passenger-form-input"]}
-                    required
-                  />
-                  {birthCertError && (
-                    <div className={classes["passenger-form__error"]}>
-                      {birthCertError}
-                    </div>
-                  )}
-                </>
+                <input
+                  type="text"
+                  placeholder="Пример: VIII-ВП-123456"
+                  value={birthCertNumber}
+                  onChange={handleBirthCertChange}
+                  className={classes["passenger-form-input"]}
+                />
               )}
             </div>
           </div>
 
+          {(passportError || birthCertError || formError) && (
+            <div className={classes["passenger-form__error"]}>
+              <ErrorIcon className={classes["passenger-form__error-icon"]} />
+              {formError || passportError || birthCertError}
+            </div>
+          )}
+
           <div className={classes["passenger-form-button-container"]}>
-            <button type="button" className={cn(classes["passenger-form-button"], ["shadow-button"])}>
+            <button
+              type="button"
+              onClick={handleSubmit}
+              className={cn(classes["passenger-form-button"], "shadow-button")}
+            >
               Следующий пассажир
             </button>
           </div>
