@@ -1,7 +1,7 @@
 import { Banner } from "../../components/Banner/Banner";
 import { OrderNav } from "../../components/OrderNav/OrderNav";
 import { Details } from "../../components/Details/Details";
-
+import { PaymentForm } from "../../components/PaymentForm/PaymentForm";
 import classes from "./payment.module.css";
 
 export const Payment= () => {
@@ -15,7 +15,7 @@ export const Payment= () => {
    
         </section>
         <div className={classes["payment__content"]}>
-          оплата
+         <PaymentForm/>
         </div>
       </div>
     </div>
