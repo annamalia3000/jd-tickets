@@ -4,11 +4,13 @@ import { PassengerItem } from "../PassengerItem/PassengerItem";
 import { useState } from "react";
 import PlusIcon from "../../assets/icons/extra.svg?react";
 import { setDepartureTrip } from "../../redux/slicers/orderSlice";
+import { useNavigate } from "react-router-dom";
 import cn from "classnames";
 import classes from "./passengersList.module.css";
 
 export const PassengersList = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const selectedTicket = useSelector(
     (state: RootState) => state.selectedTicket
   );
@@ -68,7 +70,8 @@ export const PassengersList = () => {
         route_direction_id: "123431", // заменить на реальный ID
         seats: passengerDataList,
       })
-    );
+    )
+    navigate("/payment");
   };
 
   return (

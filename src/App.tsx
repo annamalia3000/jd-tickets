@@ -12,6 +12,7 @@ import { NotFound } from "./pages/NotFound/NotFound";
 
 import { Passengers } from "./pages/Passengers/Passengers";
 import "./App.css";
+import { Payment } from "./pages/Payment/Payment";
 
 function App() {
   const routes = createBrowserRouter(
@@ -20,6 +21,7 @@ function App() {
         <Route index element={<Home />} />
         <Route path="/order" element={<Order />} />
           <Route path="/passengers" element={<Passengers/>} />
+           <Route path="/payment" element={<Payment/>} />
         <Route path="*" element={<NotFound />} />
       </Route>
     )
