@@ -9,10 +9,10 @@ import { Layout } from "./Layout/Layout";
 import { Home } from "./pages/Home/Home";
 import { Order } from "./pages/Order/Order";
 import { NotFound } from "./pages/NotFound/NotFound";
-
 import { Passengers } from "./pages/Passengers/Passengers";
-import "./App.css";
 import { Payment } from "./pages/Payment/Payment";
+import { Check } from "./pages/Check/Check";
+import "./App.css";
 
 function App() {
   const routes = createBrowserRouter(
@@ -22,6 +22,7 @@ function App() {
         <Route path="/order" element={<Order />} />
           <Route path="/passengers" element={<Passengers/>} />
            <Route path="/payment" element={<Payment/>} />
+            <Route path="/check" element={<Check/>} />
         <Route path="*" element={<NotFound />} />
       </Route>
     )

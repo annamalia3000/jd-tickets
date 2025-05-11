@@ -15,6 +15,12 @@ import { useState } from "react";
 import cn from "classnames";
 import classes from "./routeItem.module.css";
 
+type RouteItemProps = {
+  route: RouteProps;
+  buttonText?: string;
+  onButtonClick?: () => void;
+};
+
 const useFormattedTime = (
   datetime: number | undefined,
   type: "datetime" | "duration"
@@ -24,8 +30,12 @@ const useFormattedTime = (
 };
 
 const url = import.meta.env.VITE_HOST;
-export const RouteItem = ({ route }: { route: RouteProps }) => {
-    const [error, setError] = useState(false);
+export const RouteItem = ({
+  route,
+  buttonText = "Выбрать места",
+  onButtonClick,
+}: RouteItemProps) => {
+  const [error, setError] = useState(false);
   const seats = route.departure.available_seats_info;
   const price = route.departure.price_info;
   const train = route.departure.train;
@@ -60,26 +70,28 @@ export const RouteItem = ({ route }: { route: RouteProps }) => {
       dispatch(setSelectedTicket(route));
 
       console.log("Список мест:", data);
-      console.log("Билет",route);
+      console.log("Билет", route);
     } catch (err) {
       console.error("Ошибка при загрузке мест:", err);
       setError(true);
     }
   };
 
+  const handleClick = onButtonClick || handleSelectSeats;
+
   return (
     <div className={classes["route-item"]}>
       {error && (
-              <PopUp
-                type="error"
-                textFirst="Произошла ошибка загрузки данных"
-                textSecond="Повторите попытку позже"
-                onClose={() => {
-                  setError(false);
-                }}
-                isOpen={error}
-              />
-            )}
+        <PopUp
+          type="error"
+          textFirst="Произошла ошибка загрузки данных"
+          textSecond="Повторите попытку позже"
+          onClose={() => {
+            setError(false);
+          }}
+          isOpen={error}
+        />
+      )}
       <div className={classes["route-item__train"]}>
         <TrainIcon className={classes["route-item__train-icon"]} />
         <span className={classes["route-item__train-name"]}>{train.name}</span>
@@ -127,10 +139,12 @@ export const RouteItem = ({ route }: { route: RouteProps }) => {
         <div className={classes["route__third-options"]}>
           <OptionsIcon className={classes["route__third-icon"]} />
           <button
-            className={cn(classes["route__button"], ["shadow-button"])}
-            onClick={handleSelectSeats}
+            className={cn(classes["route__button"], "shadow-button", {
+              [classes["change-button"]]: buttonText === "Изменить",
+            })}
+            onClick={handleClick}
           >
-            Выбрать места
+            {buttonText}
           </button>
         </div>
       </div>

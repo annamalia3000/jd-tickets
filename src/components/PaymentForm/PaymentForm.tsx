@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/slicers/orderSlice";
 import ErrorIcon from "../../assets/icons/error.svg?react";
+import { useNavigate } from "react-router-dom";
 import cn from "classnames";
 import classes from "./paymentForm.module.css";
 
@@ -16,6 +17,7 @@ type Data = {
 
 export const PaymentForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [lastName, setLastName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [middleName, setMiddleName] = useState("");
@@ -66,6 +68,7 @@ export const PaymentForm = () => {
         payment_method: paymentMethod,
       };
       dispatch(setUser(data));
+      navigate("/check");
     }
   };
 
@@ -153,7 +156,8 @@ export const PaymentForm = () => {
               checked={paymentMethod === "online"}
               onChange={() => setPaymentMethod("online")}
             />
-            Онлайн
+            <span className={classes["payment-form__checkbox-item"]}>Онлайн</span>
+            
           </label>
           <div className={classes["payment-form__online"]}>
             <span className={classes["payment-form__online-text"]}>
@@ -175,7 +179,8 @@ export const PaymentForm = () => {
               checked={paymentMethod === "cash"}
               onChange={() => setPaymentMethod("cash")}
             />
-            Наличными
+            <span className={classes["payment-form__checkbox-item"]}>Наличными</span>
+            
           </label>
         </div>
         {formError && (

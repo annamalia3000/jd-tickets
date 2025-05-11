@@ -85,6 +85,14 @@
 
   color: rgba(146, 143, 148, 1);
 }
+
+.payment-form__checkbox-item {
+    margin-left: 10px;
+}
+
+.payment-form__checkbox input[type="radio"]:checked + .payment-form__checkbox-item {
+  color: rgba(255, 168, 0, 1);
+}
 .payment-form__online {
   display: flex;
   justify-content: space-between;

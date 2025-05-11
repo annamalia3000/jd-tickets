@@ -154,3 +154,9 @@
   border-color: transparent;
   border-radius: 5px;
 }
+
+ .change-button {
+  background-color: transparent;
+  border-color: rgba(41, 41, 41, 1);
+  color: rgba(41, 41, 41, 1);
+ }

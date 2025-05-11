@@ -1,0 +1,40 @@
+.check-passenger {
+  padding: 4%;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+
+  border-bottom: 1px solid rgba(229, 229, 229, 1);
+  gap: 60px;
+}
+
+.check-passenger-section-icon {
+  gap: 10px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 100%;
+  width: 100px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  color: rgba(41, 41, 41, 1);
+}
+.check-passenger-section {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 100%;
+
+  color: rgba(41, 41, 41, 1);
+}
+
+.check-passenger-text {
+  color: rgba(146, 143, 148, 1);
+}
