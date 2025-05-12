@@ -87,7 +87,7 @@
   justify-content: flex-end;
 
   gap: 30px;
-  padding: 4%;
+ padding: 2% 4%;
   flex: 0 0 314px;
   border-left: 1px solid rgba(146, 143, 148, 1);
 }

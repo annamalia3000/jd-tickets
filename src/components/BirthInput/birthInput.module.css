@@ -1,0 +1,44 @@
+.date__container {
+  position: relative;
+  width: 100%;
+  max-width: 322px;
+}
+
+.date__input {
+  box-sizing: border-box;
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 100%;
+
+  width: 100%;
+
+
+  border-radius: 3px;
+  padding: 10px;
+  padding-right: 40px;
+
+  cursor: pointer;
+  caret-color: transparent;
+  border: 1px solid rgba(146, 143, 148, 1);
+}
+
+.date__input-icon {
+  position: absolute;
+  top: 6px;
+  right: 15px;
+  color: rgba(229, 229, 229, 1);
+  pointer-events: none;
+}
+
+.date__picker {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 1);
+  box-sizing: border-box;
+
+  height: 302px;
+  border: 1px solid rgba(41, 41, 41, 0.8);;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  z-index: 10;
+}

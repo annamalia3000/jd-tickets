@@ -4,10 +4,11 @@ import PlusIcon from "../../assets/icons/pas-plus.svg?react";
 import CrossIcon from "../../assets/icons/cross.svg?react";
 import SelectIcon from "../../assets/icons/select-arrow.svg?react";
 import ErrorIcon from "../../assets/icons/error.svg?react";
-import { DateInput } from "../DateInput/DateInput";
+import { BirthInput } from "../BirthInput/BirthInput";
 import { SelectComponent } from "../Select/SelectComponent";
 import cn from "classnames";
 import classes from "./passengerItem.module.css";
+
 type Data = {
   coach_id: string;
   person_info: PersonInfo;
@@ -135,7 +136,7 @@ export const PassengerItem = ({
         coach_id: "12341", //заглушка
         seat_number: 10, //заглушка
         is_child: passengerType === "child",
-        include_children_seat: true, //заглушка - если это kid, то true
+        include_children_seat: passengerType === "child",
         person_info: {
           is_adult: passengerType === "adult",
           first_name: firstName,
@@ -165,6 +166,12 @@ export const PassengerItem = ({
 
   const handleBirthCertChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBirthCertNumber(e.target.value.toUpperCase());
+  };
+
+  const handlePassengerTypeChange = (value: string) => {
+    if (value === "adult" || value === "child") {
+      setPassengerType(value);
+    }
   };
 
   return (
@@ -199,7 +206,7 @@ export const PassengerItem = ({
             <div className={classes["passenger-form__select"]}>
               <SelectComponent
                 value={passengerType}
-                onChange={setPassengerType}
+                onChange={handlePassengerTypeChange}
                 options={passengerTypeOptions}
               />
               <SelectIcon className={classes["passenger-form__select-icon"]} />
@@ -250,7 +257,6 @@ export const PassengerItem = ({
                     className={classes["gender-radio"]}
                     checked={gender === "M"}
                     onChange={() => setGender("M")}
-
                   />
                   <label
                     htmlFor={`male-${index}`}
@@ -279,7 +285,7 @@ export const PassengerItem = ({
               <div className={classes["passenger-form-age"]}>
                 <label className={classes["passenger-form-label"]}>
                   <span>Дата рождения</span>
-                  <DateInput
+                  <BirthInput
                     value={birthDate}
                     onChange={(val) => setBirthDate(val)}
                   />
@@ -361,4 +367,5 @@ export const PassengerItem = ({
       )}
     </form>
   );
+
 };

@@ -23,7 +23,13 @@ type Seat = {
 export const CheckPassenger = ({ seat }: { seat: Seat }) => {
   const person = seat.person_info;
   const name = `${person.last_name} ${person.first_name} ${person.patronymic}`;
-  const docType = person.document_type === "паспорт" ? "Паспорт РФ" : "Свидетельство о рождении";
+  const docType =
+    person.document_type === "паспорт"
+      ? "Паспорт РФ"
+      : "Свидетельство о рождении";
+
+  const [year, month, day] = person.birthday.split("-");
+  const formattedDate = `${day}.${month}.${year}`;
 
   return (
     <div className={classes["check-passenger"]}>
@@ -35,8 +41,12 @@ export const CheckPassenger = ({ seat }: { seat: Seat }) => {
       </div>
       <div className={classes["check-passenger-section"]}>
         <span>{name}</span>
-        <span className={classes["check-passenger-text"]}>Пол: {person.gender ? "мужской" : "женский"}</span>
-        <span className={classes["check-passenger-text"]}>Дата рождения: {person.birthday}</span>
+        <span className={classes["check-passenger-text"]}>
+          Пол: {person.gender ? "мужской" : "женский"}
+        </span>
+        <span className={classes["check-passenger-text"]}>
+          Дата рождения: {formattedDate}
+        </span>
         <span className={classes["check-passenger-text"]}>
           {docType}: {person.document_data}
         </span>
