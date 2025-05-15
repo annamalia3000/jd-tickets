@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Banner } from "../../components/Banner/Banner";
 import { OrderNav } from "../../components/OrderNav/OrderNav";
 import { Details } from "../../components/Details/Details";
@@ -7,22 +8,86 @@ import { RootState } from "../../redux/state/store";
 import RubIcon from "../../assets/icons/rub.svg?react";
 import { CheckPassenger } from "../../components/CheckPassenger/CheckPassenger";
 import { useNavigate } from "react-router-dom";
+import { PopUp } from "../../components/PopUp/PopUp";
 import cn from "classnames";
 import classes from "./check.module.css";
 
 export const Check = () => {
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
   const selectedTicket = useSelector(
     (state: RootState) => state.selectedTicket
   );
   const order = useSelector((state: RootState) => state.order);
 
-  const handleSubmit = () => {
-    navigate("/success");
+  const url = import.meta.env.VITE_HOST;
+  const apiUrl = `${url}/order`;
+
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user: {
+            first_name: order.user?.first_name,
+            last_name: order.user?.last_name,
+            patronymic: order.user?.patronymic,
+            phone: order.user?.phone,
+            email: order.user?.email,
+            payment_method: order.user?.payment_method,
+          },
+          departure: {
+            route_direction_id: order.departure?.route_direction_id,
+            seats: order.departure?.seats.map((seat) => ({
+              coach_id: seat.coach_id,
+              seat_number: seat.seat_number,
+              is_child: seat.is_child,
+              include_children_seat: seat.include_children_seat,
+              person_info: {
+                is_adult: seat.person_info.is_adult,
+                first_name: seat.person_info.first_name,
+                last_name: seat.person_info.last_name,
+                patronymic: seat.person_info.patronymic,
+                gender: seat.person_info.gender,
+                birthday: seat.person_info.birthday,
+                document_type: seat.person_info.document_type,
+                document_data: seat.person_info.document_data,
+              },
+            })),
+          },
+
+          
+          // если есть обратный маршрут:
+          // arrival: { ... }
+        }),
+      });
+
+      const data = await response.json();
+      console.log("Успешный заказ:", data);
+      navigate("/success");
+    } catch (error) {
+      console.error("Ошибка при отправке заказа:", error);
+
+      setError(true);
+    }
   };
 
   return (
     <div className={classes["check"]}>
+      {error && (
+        <PopUp
+          type="error"
+          textFirst="Ошибка при отправке заказа"
+          textSecond="Повторите попытку позже"
+          onClose={() => {
+            setError(false);
+          }}
+          isOpen={error}
+        />
+      )}
       <Banner img="img/order-banner.png" direction={true} extraClasses={true} />
       <OrderNav activeStep={4} />
       <div className={classes["check__container"]}>

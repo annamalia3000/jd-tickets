@@ -1,13 +1,11 @@
 import { useSelector } from "react-redux";
 import { useMemo, useState } from "react";
-import cn from "classnames";
 import { useFilters } from "../../hooks/useFilters";
-
 import { RootState } from "../../redux/state/store";
 import { SelectComponent } from "../Select/SelectComponent";
 import { RouteItem } from "../RouteItem/RouteItem";
 import { PagesNum } from "../PagesNum/PagesNum";
-
+import cn from "classnames";
 import classes from "./routeList.module.css";
 
 type SortOption = "price" | "time" | "duration";

@@ -39,6 +39,8 @@ export const PaymentForm = () => {
     return emailRegex.test(email);
   };
 
+  const editPhone = phone.replace(/^\+7/, "8")
+
   const handleSubmit = () => {
     let isValid = true;
 
@@ -63,7 +65,7 @@ export const PaymentForm = () => {
         first_name: firstName,
         last_name: lastName,
         patronymic: middleName,
-        phone,
+        phone: editPhone,
         email,
         payment_method: paymentMethod,
       };

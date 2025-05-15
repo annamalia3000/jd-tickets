@@ -84,7 +84,7 @@ export const Direction = ({ extraClasses }: DirectionProps) => {
       return data.total_count;
     } catch (err) {
       console.error("Ошибка запроса маршрутов:", err);
-      return 0;
+      setError(true);
     }
   };
 

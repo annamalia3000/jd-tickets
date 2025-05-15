@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/state/store";
 import MinusIcon from "../../assets/icons/pas-minus.svg?react";
 import PlusIcon from "../../assets/icons/pas-plus.svg?react";
 import CrossIcon from "../../assets/icons/cross.svg?react";
@@ -46,6 +48,9 @@ export const PassengerItem = ({
   const [docType, setDocType] = useState("passport");
   const [passengerType, setPassengerType] = useState<"adult" | "child">(
     initialType
+  );
+  const seats = useSelector(
+    (state: RootState) => state.seats
   );
 
   const [lastName, setLastName] = useState("");
@@ -133,7 +138,7 @@ export const PassengerItem = ({
 
     if (isValid) {
       const data = {
-        coach_id: "12341", //заглушка
+        coach_id: seats[0].coach._id, //заглушка
         seat_number: 10, //заглушка
         is_child: passengerType === "child",
         include_children_seat: passengerType === "child",
@@ -367,5 +372,4 @@ export const PassengerItem = ({
       )}
     </form>
   );
-
 };
