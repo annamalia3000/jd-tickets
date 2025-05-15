@@ -120,6 +120,7 @@ const routesSlice = createSlice({
     setPriceRange: (state, action: PayloadAction<[number, number]>) => {
       state.priceRange = action.payload;
     },
+     clearRoute: () => initialState,
   },
 });
 
@@ -133,6 +134,7 @@ export const {
   setToDate,
   setFilters,
   setPriceRange,
+  clearRoute
 } = routesSlice.actions;
 
 export default routesSlice.reducer;

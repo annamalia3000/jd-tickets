@@ -135,3 +135,29 @@
   width: 228px;
   height: 39px;
 }
+
+.check__content__button-container {
+    margin-top: 30px;
+    width: 100%;
+     box-sizing: border-box;
+    display: flex;
+    justify-content: flex-end;
+
+}
+
+.check-button {
+    align-self: flex-end;
+  width: 323px;
+  height: 60px;
+
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 100%;
+
+  text-align: center;
+  text-transform: uppercase;
+  background-color: rgba(255, 168, 0, 1);
+  color: rgba(255, 255, 255, 1);
+  border: 1px solid rgba(255, 168, 0, 1);
+  border-radius: 5px;
+}

@@ -4,18 +4,17 @@ import { Details } from "../../components/Details/Details";
 import { PaymentForm } from "../../components/PaymentForm/PaymentForm";
 import classes from "./payment.module.css";
 
-export const Payment= () => {
+export const Payment = () => {
   return (
     <div className={classes["payment"]}>
-      <Banner img="img/order-banner.png" extraClasses={true} />
+      <Banner img="img/order-banner.png" direction={true} extraClasses={true} />
       <OrderNav activeStep={3} />
       <div className={classes["payment__container"]}>
         <section className={classes["payment__section"]}>
           <Details />
-   
         </section>
         <div className={classes["payment__content"]}>
-         <PaymentForm/>
+          <PaymentForm />
         </div>
       </div>
     </div>

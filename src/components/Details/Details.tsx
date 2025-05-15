@@ -12,7 +12,6 @@ import { useTime } from "../../hooks/useTime";
 import cn from "classnames";
 import classes from "./details.module.css";
 
-
 const getPassengerWord = (count: number, type: "adult" | "child") => {
   if (type === "adult") {
     if (count === 1) return "взрослый";

@@ -22,6 +22,7 @@ export type SelectedTicketState = {
   adults?: number;
   kids?: number;
   kidsNoSeat?: number;
+  totalPrice? : number;
 };
 
 export type Train = {
@@ -141,6 +142,7 @@ const initialState: SelectedTicketState = {
   adults: 0,
   kids: 0,
   kidsNoSeat: 0,
+  totalPrice: 0,
 };
 
 const selectedTicketSlice = createSlice({
@@ -160,6 +162,9 @@ const selectedTicketSlice = createSlice({
     setKidsNoSeatNumberTicket: (state, action: PayloadAction<number>) => {
       state.kidsNoSeat = action.payload;
     },
+     setTotalPrice: (state, action: PayloadAction<number>) => {
+      state.totalPrice = action.payload;
+    },
   },
 });
 
@@ -169,5 +174,6 @@ export const {
   setAdultsNumberTicket,
   setKidsNumberTicket,
   setKidsNoSeatNumberTicket,
+  setTotalPrice
 } = selectedTicketSlice.actions;
 export default selectedTicketSlice.reducer;

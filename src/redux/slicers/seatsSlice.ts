@@ -38,9 +38,10 @@ const seatsSlice = createSlice({
     setSeats: (state, action: PayloadAction<CoachWithSeats[]>) => {
       return action.payload;
     },
+    clearSeats: () => initialState,
   },
 });
 
-export const { setSeats } = seatsSlice.actions;
+export const { setSeats, clearSeats } = seatsSlice.actions;
 
 export default seatsSlice.reducer;

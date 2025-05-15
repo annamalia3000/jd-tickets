@@ -4,6 +4,7 @@ import { PassengerItem } from "../PassengerItem/PassengerItem";
 import { useState } from "react";
 import PlusIcon from "../../assets/icons/extra.svg?react";
 import { setDepartureTrip } from "../../redux/slicers/orderSlice";
+import { setTotalPrice} from "../../redux/slicers/selectedTicketSlice";
 import { useNavigate } from "react-router-dom";
 import cn from "classnames";
 import classes from "./passengersList.module.css";
@@ -18,6 +19,12 @@ export const PassengersList = () => {
   const adults = selectedTicket?.adults || 0;
   const kids = selectedTicket?.kids || 0;
   const kidsNoSeat = selectedTicket?.kidsNoSeat || 0;
+
+  const priceAdults = selectedTicket?.min_price * adults || 0;
+  const priceKids = selectedTicket?.min_price * kids || 0;
+  const priceTotal = priceAdults + priceKids;
+
+  const route_direction_id = selectedTicket?.departure._id;
 
   const initialCount = adults + kids + kidsNoSeat;
 
@@ -67,10 +74,11 @@ export const PassengersList = () => {
   const handleSubmitAll = () => {
     dispatch(
       setDepartureTrip({
-        route_direction_id: "123431", // заменить на реальный ID
+        route_direction_id: route_direction_id, 
         seats: passengerDataList,
       })
-    )
+    );
+    dispatch(setTotalPrice(priceTotal));
     navigate("/payment");
   };
 

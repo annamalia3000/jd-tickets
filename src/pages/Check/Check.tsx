@@ -5,25 +5,25 @@ import { RouteItem } from "../../components/RouteItem/RouteItem";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/state/store";
 import RubIcon from "../../assets/icons/rub.svg?react";
+import { CheckPassenger } from "../../components/CheckPassenger/CheckPassenger";
+import { useNavigate } from "react-router-dom";
 import cn from "classnames";
 import classes from "./check.module.css";
-import { CheckPassenger } from "../../components/CheckPassenger/CheckPassenger";
 
 export const Check = () => {
+  const navigate = useNavigate();
   const selectedTicket = useSelector(
     (state: RootState) => state.selectedTicket
   );
   const order = useSelector((state: RootState) => state.order);
 
-  const adults = selectedTicket?.adults || 0;
-  const kids = selectedTicket?.kids || 0;
-  const priceAdults = selectedTicket?.min_price * adults || 0;
-  const priceKids = selectedTicket?.min_price * kids || 0;
-  const priceTotal = priceAdults + priceKids;
+  const handleSubmit = () => {
+    navigate("/success");
+  };
 
   return (
     <div className={classes["check"]}>
-      <Banner img="img/order-banner.png" extraClasses={true} />
+      <Banner img="img/order-banner.png" direction={true} extraClasses={true} />
       <OrderNav activeStep={4} />
       <div className={classes["check__container"]}>
         <section className={classes["check__section"]}>
@@ -68,7 +68,7 @@ export const Check = () => {
                         classes["check__content__section-total-price-text"]
                       }
                     >
-                      {priceTotal}
+                      {selectedTicket?.totalPrice}
                     </span>
                     <span className={classes["check-rub-icon"]}>
                       <RubIcon />
@@ -111,6 +111,14 @@ export const Check = () => {
                 Изменить
               </button>
             </div>
+          </div>
+          <div className={classes["check__content__button-container"]}>
+            <button
+              className={cn(classes["check-button"], "shadow-button")}
+              onClick={handleSubmit}
+            >
+              КУПИТЬ БИЛЕТЫ
+            </button>
           </div>
         </div>
       </div>

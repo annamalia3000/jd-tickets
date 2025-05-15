@@ -8,12 +8,12 @@ import classes from "./home.module.css";
 export const Home = () => {
   return (
     <div className={classes["home"]}>
-   <Banner
-   titleThin="Вся жизнь - "
-   titleBold="путешествие!"
-   img="img/home-banner.jpeg"
-
-   />
+      <Banner
+        titleThin="Вся жизнь - "
+        titleBold="путешествие!"
+        img="img/home-banner.jpeg"
+        direction={true}
+      />
       <section className={classes["home__section"]}>
         <About />
       </section>
@@ -23,7 +23,6 @@ export const Home = () => {
       <section className={classes["home__section"]}>
         <Reviews />
       </section>
-
     </div>
   );
 };

@@ -13,11 +13,13 @@ export const Order = () => {
   const selectedTicket = useSelector(
     (state: RootState) => state.selectedTicket
   );
-    const isSelectedTicketValid = selectedTicket?.departure?._id !== "" && selectedTicket?.arrival?._id !== "";
+  const isSelectedTicketValid =
+    selectedTicket?.departure?._id !== "" &&
+    selectedTicket?.arrival?._id !== "";
 
   return (
     <div className={classes["order"]}>
-      <Banner img="img/order-banner.png" extraClasses={true} />
+      <Banner img="img/order-banner.png" direction={true} extraClasses={true} />
       <OrderNav activeStep={1} />
       <div className={classes["order__container"]}>
         <section className={classes["order__section"]}>
