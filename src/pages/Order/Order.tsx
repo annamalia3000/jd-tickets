@@ -6,6 +6,8 @@ import { RouteList } from "../../components/RouteList/RouteList";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/state/store";
 import { OrderNav } from "../../components/OrderNav/OrderNav";
+import { Suspense } from "react";
+import { Loader } from "../../components/Loader/Loader";
 
 import classes from "./order.module.css";
 
@@ -20,16 +22,18 @@ export const Order = () => {
   return (
     <div className={classes["order"]}>
       <Banner img="img/order-banner.png" direction={true} extraClasses={true} />
-      <OrderNav activeStep={1} />
-      <div className={classes["order__container"]}>
-        <section className={classes["order__section"]}>
-          <Filter />
-          <LastTicketList />
-        </section>
-        <div className={classes["order__content"]}>
-          {isSelectedTicketValid ? <Seats /> : <RouteList />}
+      <Suspense fallback={<Loader />}>
+        <OrderNav activeStep={1} />
+        <div className={classes["order__container"]}>
+          <section className={classes["order__section"]}>
+            <Filter />
+            <LastTicketList />
+          </section>
+          <div className={classes["order__content"]}>
+            {isSelectedTicketValid ? <Seats /> : <RouteList />}
+          </div>
         </div>
-      </div>
+      </Suspense>
     </div>
   );
 };
