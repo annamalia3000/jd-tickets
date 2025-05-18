@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type User = {
   first_name: string;
@@ -6,7 +6,7 @@ type User = {
   patronymic: string;
   phone: string;
   email: string;
-  payment_method: 'cash' | 'online';
+  payment_method: "cash" | "online";
 };
 
 type PersonInfo = {
@@ -14,9 +14,9 @@ type PersonInfo = {
   first_name: string;
   last_name: string;
   patronymic: string;
-  gender: boolean; 
-  birthday: string; 
-  document_type: 'паспорт' | 'свидетельство о рождении';
+  gender: boolean;
+  birthday: string;
+  document_type: "паспорт" | "свидетельство о рождении";
   document_data: string;
 };
 
@@ -46,7 +46,7 @@ const initialState: OrderState = {
 };
 
 const orderSlice = createSlice({
-  name: 'order',
+  name: "order",
   initialState,
   reducers: {
     setUser(state, action: PayloadAction<User>) {
@@ -66,11 +66,7 @@ const orderSlice = createSlice({
   },
 });
 
-export const {
-  setUser,
-  setDepartureTrip,
-  setArrivalTrip,
-  clearOrder,
-} = orderSlice.actions;
+export const { setUser, setDepartureTrip, setArrivalTrip, clearOrder } =
+  orderSlice.actions;
 
 export default orderSlice.reducer;

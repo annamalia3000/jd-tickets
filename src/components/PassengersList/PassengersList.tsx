@@ -5,6 +5,9 @@ import { useState } from "react";
 import PlusIcon from "../../assets/icons/extra.svg?react";
 import { setDepartureTrip } from "../../redux/slicers/orderSlice";
 import {
+  setForwardAdults,
+  setForwardKids,
+  setForwardKidsNoSeat,
   setBackwardTotalPrice,
   setForwardTotalPrice,
 } from "../../redux/slicers/selectedTicketSlice";
@@ -43,8 +46,10 @@ export const PassengersList = () => {
 
   const [passengers, setPassengers] = useState<string[]>([
     ...Array(adults).fill("adult"),
-    ...Array(kids + kidsNoSeat).fill("child"),
+    ...Array(kids).fill("child"),
+    ...Array(kidsNoSeat).fill("childNoSeat"),
   ]);
+
   const [validStates, setValidStates] = useState<boolean[]>(
     Array(initialCount).fill(false)
   );
@@ -53,17 +58,34 @@ export const PassengersList = () => {
   );
 
   const handleRemovePassenger = (indexToRemove: number) => {
-    setPassengers((prev) => prev.filter((_, idx) => idx !== indexToRemove));
-    setValidStates((prev) => prev.filter((_, idx) => idx !== indexToRemove));
-    setPassengerDataList((prev) =>
-      prev.filter((_, idx) => idx !== indexToRemove)
+    const newPassengers = passengers.filter((_, idx) => idx !== indexToRemove);
+    const newValidStates = validStates.filter(
+      (_, idx) => idx !== indexToRemove
     );
+    const newPassengerDataList = passengerDataList.filter(
+      (_, idx) => idx !== indexToRemove
+    );
+
+    setPassengers(newPassengers);
+    setValidStates(newValidStates);
+    setPassengerDataList(newPassengerDataList);
+
+    const newAdults = newPassengers.filter((p) => p === "adult").length;
+    const newKids = newPassengers.filter((p) => p === "child").length;
+    const newKidsNoSeat = newPassengers.filter(
+      (p) => p === "childNoSeat"
+    ).length;
+
+    dispatch(setForwardAdults(newAdults));
+    dispatch(setForwardKids(newKids));
+    dispatch(setForwardKidsNoSeat(newKidsNoSeat));
   };
 
   const handleAddPassenger = () => {
     setPassengers((prev) => [...prev, "adult"]);
     setValidStates((prev) => [...prev, false]);
     setPassengerDataList((prev) => [...prev, null]);
+    dispatch(setForwardAdults(adults + 1));
   };
 
   const handleValidityChange = (index: number, isValid: boolean) => {
@@ -85,10 +107,13 @@ export const PassengersList = () => {
   const isFormValid = validStates.every(Boolean);
 
   const handleSubmitAll = () => {
+    const validPassengerData = passengerDataList.filter(
+      (_, idx) => validStates[idx]
+    );
     dispatch(
       setDepartureTrip({
         route_direction_id: route_direction_id,
-        seats: passengerDataList,
+        seats: validPassengerData,
       })
     );
     dispatch(setForwardTotalPrice(priceForward));
