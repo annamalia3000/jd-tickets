@@ -13,6 +13,7 @@ import { Suspense } from "react";
 import { Loader } from "../../components/Loader/Loader";
 import cn from "classnames";
 import classes from "./check.module.css";
+import { RouteCombined } from "../../components/RouteCombined/RouteCombined";
 
 export const Check = () => {
   const [error, setError] = useState(false);
@@ -61,17 +62,34 @@ export const Check = () => {
             })),
           },
 
-          // если есть обратный маршрут:
-          // arrival: { ... }
+          ...(order.arrival ? {
+            arrival: {
+              route_direction_id: order.arrival?.route_direction_id,
+              seats: order.arrival?.seats.map((seat) => ({
+                coach_id: seat.coach_id,
+                seat_number: seat.seat_number,
+                is_child: seat.is_child,
+                include_children_seat: seat.include_children_seat,
+                person_info: {
+                  is_adult: seat.person_info.is_adult,
+                  first_name: seat.person_info.first_name,
+                  last_name: seat.person_info.last_name,
+                  patronymic: seat.person_info.patronymic,
+                  gender: seat.person_info.gender,
+                  birthday: seat.person_info.birthday,
+                  document_type: seat.person_info.document_type,
+                  document_data: seat.person_info.document_data,
+                },
+              })),
+            }
+          } : {}),
         }),
       });
 
       const data = await response.json();
       console.log("Успешный заказ:", data);
       navigate("/success");
-    } catch (error) {
-      console.error("Ошибка при отправке заказа:", error);
-
+    } catch (error) {      console.error("Ошибка при отправке заказа:", error);
       setError(true);
     }
   };
@@ -103,13 +121,24 @@ export const Check = () => {
                   Поезд
                 </h4>
               </div>
-              <RouteItem
-                route={selectedTicket}
+             { selectedTicket.backward ? (
+              <RouteCombined
+                forwardRoute={selectedTicket.forward}
+                backwardRoute={selectedTicket.backward}
                 buttonText="Изменить"
                 onButtonClick={() => {
                   console.log("Изменить");
                 }}
               />
+             ) : (
+              <RouteItem
+                route={selectedTicket.forward}
+                buttonText="Изменить"
+                onButtonClick={() => {
+                  console.log("Изменить");
+                }}
+              />
+             )}
             </div>
 
             <div className={classes["check__content__section"]}>

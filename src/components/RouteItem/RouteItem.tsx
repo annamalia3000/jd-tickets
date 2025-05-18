@@ -5,10 +5,10 @@ import ArrowIcon from "../../assets/icons/arrow2.svg?react";
 import ArrowYelIcon from "../../assets/icons/arrow3.svg?react";
 import { useTime } from "../../hooks/useTime";
 import { RouteProps } from "../../types/types";
-import { setSeats } from "../../redux/slicers/seatsSlice";
+import { setDepartureSeats } from "../../redux/slicers/seatsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/state/store";
-import { setSelectedTicket } from "../../redux/slicers/selectedTicketSlice";
+import { setForwardTicket } from "../../redux/slicers/selectedTicketSlice";
 import { PopUp } from "../PopUp/PopUp";
 
 import { useState } from "react";
@@ -66,8 +66,8 @@ export const RouteItem = ({
     try {
       const res = await fetch(apiUrl);
       const data = await res.json();
-      dispatch(setSeats(data));
-      dispatch(setSelectedTicket(route));
+      dispatch(setDepartureSeats(data));
+      dispatch(setForwardTicket(route));
 
       console.log("Список мест:", data);
       console.log("Билет", route);

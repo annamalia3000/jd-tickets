@@ -4,7 +4,10 @@ import { PassengerItem } from "../PassengerItem/PassengerItem";
 import { useState } from "react";
 import PlusIcon from "../../assets/icons/extra.svg?react";
 import { setDepartureTrip } from "../../redux/slicers/orderSlice";
-import { setTotalPrice} from "../../redux/slicers/selectedTicketSlice";
+import {
+  setBackwardTotalPrice,
+  setForwardTotalPrice,
+} from "../../redux/slicers/selectedTicketSlice";
 import { useNavigate } from "react-router-dom";
 import cn from "classnames";
 import classes from "./passengersList.module.css";
@@ -16,15 +19,25 @@ export const PassengersList = () => {
     (state: RootState) => state.selectedTicket
   );
 
-  const adults = selectedTicket?.adults || 0;
-  const kids = selectedTicket?.kids || 0;
-  const kidsNoSeat = selectedTicket?.kidsNoSeat || 0;
+  const adults = selectedTicket?.forward.adults || 0;
+  const kids = selectedTicket?.forward.kids || 0;
+  const kidsNoSeat = selectedTicket?.forward.kidsNoSeat || 0;
 
-  const priceAdults = selectedTicket?.min_price * adults || 0;
-  const priceKids = selectedTicket?.min_price * kids || 0;
-  const priceTotal = priceAdults + priceKids;
+  const priceForwardAdults = selectedTicket?.forward.min_price * adults || 0;
+  const priceForwardKids = selectedTicket?.forward.min_price * kids || 0;
 
-  const route_direction_id = selectedTicket?.departure._id;
+  const adultsBackward = selectedTicket?.backward?.adults || 0;
+  const kidsBackward = selectedTicket?.backward?.kids || 0;
+
+  const priceBackwardAdults =
+    selectedTicket?.forward.min_price * adultsBackward || 0;
+  const priceBackwardKids =
+    selectedTicket?.forward.min_price * kidsBackward || 0;
+
+  const priceForward = priceForwardAdults + priceForwardKids;
+  const priceBackward = priceBackwardAdults + priceBackwardKids;
+
+  const route_direction_id = selectedTicket?.forward.departure._id;
 
   const initialCount = adults + kids + kidsNoSeat;
 
@@ -74,11 +87,12 @@ export const PassengersList = () => {
   const handleSubmitAll = () => {
     dispatch(
       setDepartureTrip({
-        route_direction_id: route_direction_id, 
+        route_direction_id: route_direction_id,
         seats: passengerDataList,
       })
     );
-    dispatch(setTotalPrice(priceTotal));
+    dispatch(setForwardTotalPrice(priceForward));
+    dispatch(setBackwardTotalPrice(priceBackward));
     navigate("/payment");
   };
 

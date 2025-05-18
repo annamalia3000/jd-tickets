@@ -138,7 +138,7 @@ export const PassengerItem = ({
 
     if (isValid) {
       const data = {
-        coach_id: seats[0].coach._id, //заглушка
+        coach_id: seats.departure[0].coach._id, //заглушка
         seat_number: 10, //заглушка
         is_child: passengerType === "child",
         include_children_seat: passengerType === "child",

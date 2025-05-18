@@ -1,6 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export type SelectedTicketState = {
+export type SelectedTicketsState = {
+  forward: TicketState;
+  backward?: TicketState;
+};
+
+export type TicketState = {
   available_seats: number;
   available_seats_info: {
     first: number;
@@ -9,7 +14,6 @@ export type SelectedTicketState = {
     fourth: number;
   };
   departure: Train;
-  arrival: Train;
 
   have_air_conditioning: boolean;
   have_first_class: boolean;
@@ -22,7 +26,7 @@ export type SelectedTicketState = {
   adults?: number;
   kids?: number;
   kidsNoSeat?: number;
-  totalPrice? : number;
+  totalPrice?: number;
 };
 
 export type Train = {
@@ -121,7 +125,7 @@ const emptyTrain: Train = {
   },
 };
 
-const initialState: SelectedTicketState = {
+const initialSelectedTicket: TicketState = {
   available_seats: 0,
   available_seats_info: {
     first: 0,
@@ -130,7 +134,6 @@ const initialState: SelectedTicketState = {
     fourth: 0,
   },
   departure: emptyTrain,
-  arrival: emptyTrain,
   have_air_conditioning: false,
   have_first_class: false,
   have_fourth_class: false,
@@ -145,35 +148,69 @@ const initialState: SelectedTicketState = {
   totalPrice: 0,
 };
 
-const selectedTicketSlice = createSlice({
-  name: "selectedTicket",
-  initialState: initialState,
+const initialState: SelectedTicketsState = {
+  forward: initialSelectedTicket,
+  backward: undefined,
+};
+
+const selectedTicketsSlice = createSlice({
+  name: "selectedTickets",
+  initialState,
   reducers: {
-    setSelectedTicket: (_state, action: PayloadAction<SelectedTicketState>) => {
-      return action.payload;
+    setForwardTicket: (state, action: PayloadAction<TicketState>) => {
+      state.forward = action.payload;
+    },
+    setBackwardTicket: (state, action: PayloadAction<TicketState>) => {
+      state.backward = action.payload;
     },
     clearSelectedTicket: () => initialState,
-    setAdultsNumberTicket: (state, action: PayloadAction<number>) => {
-      state.adults = action.payload;
+    setForwardAdults: (state, action: PayloadAction<number>) => {
+      state.forward.adults = action.payload;
     },
-    setKidsNumberTicket: (state, action: PayloadAction<number>) => {
-      state.kids = action.payload;
+    setForwardKids: (state, action: PayloadAction<number>) => {
+      state.forward.kids = action.payload;
     },
-    setKidsNoSeatNumberTicket: (state, action: PayloadAction<number>) => {
-      state.kidsNoSeat = action.payload;
+    setForwardKidsNoSeat: (state, action: PayloadAction<number>) => {
+      state.forward.kidsNoSeat = action.payload;
     },
-     setTotalPrice: (state, action: PayloadAction<number>) => {
-      state.totalPrice = action.payload;
+    setBackwardAdults: (state, action: PayloadAction<number>) => {
+      if (state.backward) {
+        state.backward.adults = action.payload;
+      }
+    },
+    setBackwardKids: (state, action: PayloadAction<number>) => {
+      if (state.backward) {
+        state.backward.kids = action.payload;
+      }
+    },
+    setBackwardKidsNoSeat: (state, action: PayloadAction<number>) => {
+      if (state.backward) {
+        state.backward.kidsNoSeat = action.payload;
+      }
+    },
+    setForwardTotalPrice: (state, action: PayloadAction<number>) => {
+      state.forward.totalPrice = action.payload;
+    },
+    setBackwardTotalPrice: (state, action: PayloadAction<number>) => {
+      if (state.backward) {
+        state.backward.totalPrice = action.payload;
+      }
     },
   },
 });
 
 export const {
-  setSelectedTicket,
+  setForwardTicket,
+  setBackwardTicket,
   clearSelectedTicket,
-  setAdultsNumberTicket,
-  setKidsNumberTicket,
-  setKidsNoSeatNumberTicket,
-  setTotalPrice
-} = selectedTicketSlice.actions;
-export default selectedTicketSlice.reducer;
+  setForwardAdults,
+  setForwardKids,
+  setForwardKidsNoSeat,
+  setBackwardAdults,
+  setBackwardKids,
+  setBackwardKidsNoSeat,
+  setForwardTotalPrice,
+  setBackwardTotalPrice,
+} = selectedTicketsSlice.actions;
+
+export default selectedTicketsSlice.reducer;

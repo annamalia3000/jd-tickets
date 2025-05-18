@@ -1,0 +1,375 @@
+.seats {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(196, 196, 196, 1);
+
+  height: auto;
+
+  background-color: rgba(255, 255, 255, 1);
+}
+.seats__controls {
+  padding: 30px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.seats__controls-back {
+  padding: 30px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.seats__controls-icon {
+  width: 76px;
+}
+
+.seats__controls-icon-back {
+  width: 76px;
+  transform: rotateY(180deg);
+}
+
+.seats__controls-button {
+  box-sizing: border-box;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 100%;
+
+  text-align: center;
+
+  color: rgba(41, 41, 41, 1);
+  background-color: transparent;
+  border: 1px solid rgba(41, 41, 41, 1);
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.seats__ticket-info {
+  padding: 30px 20px;
+  height: 125px;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  background-color: rgba(247, 246, 246, 1);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.seats__ticket-info-direction {
+  text-transform: capitalize;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  border-right: 1px solid rgba(255, 255, 255, 1);
+}
+.seats__ticket-info-direction-name {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 100%;
+}
+
+.seats__ticket-info-duration {
+  display: flex;
+  align-items: center;
+  border-left: 1px solid rgba(255, 255, 255, 1);
+  gap: 12px;
+}
+
+.seats__ticket-info-from {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.seats__ticket-info-to {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.seats__ticket-info-time {
+  display: flex;
+
+  flex-wrap: wrap;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 100%;
+
+  color: rgba(0, 0, 0, 1);
+  flex-direction: column;
+}
+.seats__ticket-info-city {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 100%;
+
+  color: rgba(0, 0, 0, 1);
+  text-transform: capitalize;
+}
+.seats__ticket-info-station {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 100%;
+  text-transform: capitalize;
+
+  color: rgba(146, 143, 148, 1);
+}
+.seats__types {
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.seats-title {
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 100%;
+  color: rgba(41, 41, 41, 1);
+  margin-bottom: 20px;
+}
+
+.seats__types-list {
+  padding: 30px 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+.seats__types-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 100%;
+
+  color: rgba(146, 143, 148, 1);
+}
+
+.aviable {
+  color: rgba(255, 168, 0, 1);
+}
+
+.seats__types-info {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.seats__types-info-wagon {
+  padding: 0 20px;
+  height: 37px;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: rgba(255, 168, 0, 0.44);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 100%;
+
+  color: rgba(0, 0, 0, 1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.seats__count {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.seats__count-buttons {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.seats__count-button-container {
+  max-width: 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.seats__count-button {
+  width: 100%;
+  height: 50px;
+  background-color: transparent;
+  border: 1px solid rgba(146, 143, 148, 1);
+  border-radius: 5px;
+
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 100%;
+
+  color: rgba(41, 41, 41, 1);
+}
+
+.seats__count-text {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 120%;
+  color: rgba(0, 0, 0, 1);
+}
+.seats__count-text-kids {
+  color: rgba(146, 143, 148, 1);
+}
+
+.seats__types-info-wagon-options {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+
+  align-items: center;
+}
+
+.seats__types-info-wagon-number {
+  display: flex;
+  gap: 8px;
+}
+.number-white {
+  font-weight: 700;
+  color: rgba(255, 255, 255, 1);
+}
+.number-black {
+  font-weight: 700;
+}
+
+.seats__types-info-wagon-text {
+}
+
+.seats__types-info-wagon-options-number {
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 100%;
+
+  text-align: center;
+  color: rgba(41, 41, 41, 1);
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(255, 168, 0, 0.44);
+  padding: 30px;
+}
+
+.options-number {
+  font-weight: 700;
+  font-size: 72px;
+  line-height: 100%;
+}
+.seats__types-info-wagon-options-section {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+.seats__types-info-wagon-options-seats {
+  gap: 15px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 140%;
+
+  color: rgba(41, 41, 41, 1);
+}
+.seats__types-info-wagon-options-section {
+  display: flex;
+  gap: 10px;
+}
+
+.seats__types-info-wagon-options-section-title {
+  height: 30px;
+  color: rgba(146, 143, 148, 1);
+}
+.text-bold {
+  font-weight: 700;
+}
+
+.seats__types-info-wagon-options-price {
+  gap: 15px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.price {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 100%;
+}
+.seats__types-info-wagon-options-service-options {
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.service-option {
+  background-color: transparent;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(41, 41, 41, 1);
+  border-radius: 5px;
+  color: rgba(41, 41, 41, 1);
+}
+
+.service-option:hover {
+  background-color: rgba(255, 168, 0, 1);
+}
+
+.active-option {
+  background-color: rgba(253, 185, 53, 1);
+  border-color: rgba(253, 185, 53, 1);
+  color: rgba(244, 242, 246, 1);
+}
+
+.included-option {
+  background-color: rgba(252, 220, 157, 1);
+  border-color: rgba(252, 220, 157, 1);
+  color: rgba(146, 143, 148, 1);
+}
+
+.seats-button {
+  align-self: flex-end;
+  width: 222px;
+  height: 60px;
+
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 100%;
+
+  text-align: center;
+  text-transform: uppercase;
+  background-color: rgba(255, 168, 0, 1);
+  color: rgba(255, 255, 255, 1);
+  border: 1px solid rgba(255, 168, 0, 1);
+  border-radius: 5px;
+}
+
+.service-option-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 6px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 10;
+}
+
+.service-option-wrapper:hover .tooltip {
+  opacity: 1;
+  pointer-events: auto;
+}

@@ -22,9 +22,9 @@ function App() {
         <Route index element={<Home />} />
         <Route path="/order" element={<Order />} />
         <Route path="/passengers" element={<Passengers />} />
-        <Route path="/payment" element={<Payment />} />
+         <Route path="/payment" element={<Payment />} />
         <Route path="/check" element={<Check />} />
-        <Route path="/success" element={<Success />} />
+        <Route path="/success" element={<Success />} /> 
         <Route path="*" element={<NotFound />} />
       </Route>
     )

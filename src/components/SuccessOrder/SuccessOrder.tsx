@@ -24,6 +24,10 @@ export const SuccessOrder = () => {
 
   const order = useSelector((state: RootState) => state.order);
 
+  const totalPrice = selectedTicket?.backward 
+    ? ((selectedTicket?.forward?.totalPrice || 0) + (selectedTicket?.backward?.totalPrice || 0)) 
+    : selectedTicket?.forward?.totalPrice;
+
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -41,7 +45,7 @@ export const SuccessOrder = () => {
         <span>№Заказа 285АА</span>
         <div className={classes["success-order__header-price"]}>
           <span className={classes["success-order__header-text"]}>сумма</span>
-          <span>{selectedTicket?.totalPrice}</span>
+          <span>{totalPrice}</span>
           <span className={classes["success-order__header-text"]}>
             <RubIcon className={classes["success-order__header-icon"]} />
           </span>

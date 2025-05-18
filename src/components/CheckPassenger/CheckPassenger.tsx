@@ -21,6 +21,9 @@ type Seat = {
 };
 
 export const CheckPassenger = ({ seat }: { seat: Seat }) => {
+  if (!seat.person_info) {
+  return null; 
+}
   const person = seat.person_info;
   const name = `${person.last_name} ${person.first_name} ${person.patronymic}`;
   const docType =

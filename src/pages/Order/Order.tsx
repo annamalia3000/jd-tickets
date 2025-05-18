@@ -16,8 +16,7 @@ export const Order = () => {
     (state: RootState) => state.selectedTicket
   );
   const isSelectedTicketValid =
-    selectedTicket?.departure?._id !== "" &&
-    selectedTicket?.arrival?._id !== "";
+    selectedTicket?.forward.departure?._id !== "" 
 
   return (
     <div className={classes["order"]}>

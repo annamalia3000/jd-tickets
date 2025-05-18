@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type Seats = {
+ type Seats = {
   index: number;
   available: boolean;
 };
@@ -22,26 +22,34 @@ type Coach = {
   train: string;
 };
 
-type CoachWithSeats = {
+export type CoachWithSeats = {
   coach: Coach;
   seats: Seats[];
 };
 
-type SeatsState = CoachWithSeats[];
+type SeatsState = {
+  departure: CoachWithSeats[];
+  arrival: CoachWithSeats[];
+};
 
-const initialState: SeatsState = [];
+const initialState: SeatsState = {
+  departure: [],
+  arrival: [],
+};
 
 const seatsSlice = createSlice({
   name: "seats",
   initialState,
   reducers: {
-    setSeats: (state, action: PayloadAction<CoachWithSeats[]>) => {
-      return action.payload;
-    },
+   setDepartureSeats: (state, action: PayloadAction<CoachWithSeats[]>) => {
+    state.departure = action.payload;
+  },
+  setArrivalSeats: (state, action: PayloadAction<CoachWithSeats[]>) => {
+    state.arrival = action.payload;
+  },
     clearSeats: () => initialState,
   },
 });
 
-export const { setSeats, clearSeats } = seatsSlice.actions;
-
+export const { setDepartureSeats, setArrivalSeats, clearSeats } = seatsSlice.actions;
 export default seatsSlice.reducer;
