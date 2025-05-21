@@ -18,24 +18,20 @@ import classes from "./passengersList.module.css";
 export const PassengersList = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const selectedTicket = useSelector(
-    (state: RootState) => state.selectedTicket
-  );
+  const selectedTicket = useSelector((state: RootState) => state.selectedTicket);
 
   const adults = selectedTicket?.forward.adults || 0;
   const kids = selectedTicket?.forward.kids || 0;
   const kidsNoSeat = selectedTicket?.forward.kidsNoSeat || 0;
 
-  const priceForwardAdults = selectedTicket?.forward.min_price * adults || 0;
-  const priceForwardKids = selectedTicket?.forward.min_price * kids || 0;
+  const priceForwardAdults = (selectedTicket?.forward.min_price || 0) * adults;
+  const priceForwardKids = (selectedTicket?.forward.min_price || 0) * kids;
 
   const adultsBackward = selectedTicket?.backward?.adults || 0;
   const kidsBackward = selectedTicket?.backward?.kids || 0;
 
-  const priceBackwardAdults =
-    selectedTicket?.forward.min_price * adultsBackward || 0;
-  const priceBackwardKids =
-    selectedTicket?.forward.min_price * kidsBackward || 0;
+  const priceBackwardAdults = (selectedTicket?.forward.min_price || 0) * adultsBackward;
+  const priceBackwardKids = (selectedTicket?.forward.min_price || 0) * kidsBackward;
 
   const priceForward = priceForwardAdults + priceForwardKids;
   const priceBackward = priceBackwardAdults + priceBackwardKids;
@@ -49,22 +45,13 @@ export const PassengersList = () => {
     ...Array(kids).fill("child"),
     ...Array(kidsNoSeat).fill("childNoSeat"),
   ]);
+  const [validStates, setValidStates] = useState<boolean[]>(Array(initialCount).fill(false));
+  const [passengerDataList, setPassengerDataList] = useState<any[]>(Array(initialCount).fill({}));
 
-  const [validStates, setValidStates] = useState<boolean[]>(
-    Array(initialCount).fill(false)
-  );
-  const [passengerDataList, setPassengerDataList] = useState<any[]>(
-    Array(initialCount).fill(null)
-  );
-
-  const handleRemovePassenger = (indexToRemove: number) => {
-    const newPassengers = passengers.filter((_, idx) => idx !== indexToRemove);
-    const newValidStates = validStates.filter(
-      (_, idx) => idx !== indexToRemove
-    );
-    const newPassengerDataList = passengerDataList.filter(
-      (_, idx) => idx !== indexToRemove
-    );
+  const handleRemovePassenger = (index: number) => {
+    const newPassengers = passengers.filter((_, i) => i !== index);
+    const newValidStates = validStates.filter((_, i) => i !== index);
+    const newPassengerDataList = passengerDataList.filter((_, i) => i !== index);
 
     setPassengers(newPassengers);
     setValidStates(newValidStates);
@@ -72,9 +59,7 @@ export const PassengersList = () => {
 
     const newAdults = newPassengers.filter((p) => p === "adult").length;
     const newKids = newPassengers.filter((p) => p === "child").length;
-    const newKidsNoSeat = newPassengers.filter(
-      (p) => p === "childNoSeat"
-    ).length;
+    const newKidsNoSeat = newPassengers.filter((p) => p === "childNoSeat").length;
 
     dispatch(setForwardAdults(newAdults));
     dispatch(setForwardKids(newKids));
@@ -84,8 +69,8 @@ export const PassengersList = () => {
   const handleAddPassenger = () => {
     setPassengers((prev) => [...prev, "adult"]);
     setValidStates((prev) => [...prev, false]);
-    setPassengerDataList((prev) => [...prev, null]);
-    dispatch(setForwardAdults(adults + 1));
+    setPassengerDataList((prev) => [...prev, {}]);
+    dispatch(setForwardAdults(prev => prev + 1));
   };
 
   const handleValidityChange = (index: number, isValid: boolean) => {
@@ -104,22 +89,20 @@ export const PassengersList = () => {
     });
   };
 
-  const isFormValid = validStates.every(Boolean);
-
   const handleSubmitAll = () => {
-    const validPassengerData = passengerDataList.filter(
-      (_, idx) => validStates[idx]
-    );
-    dispatch(
-      setDepartureTrip({
-        route_direction_id: route_direction_id,
-        seats: validPassengerData,
-      })
-    );
+    const validPassengerData = passengerDataList.filter((_, idx) => validStates[idx]);
+
+    dispatch(setDepartureTrip({
+      route_direction_id,
+      seats: validPassengerData,
+    }));
+
     dispatch(setForwardTotalPrice(priceForward));
     dispatch(setBackwardTotalPrice(priceBackward));
     navigate("/payment");
   };
+
+  const isFormValid = validStates.every(Boolean);
 
   return (
     <div className={classes["passengers-list-container"]}>
@@ -130,18 +113,13 @@ export const PassengersList = () => {
             index={index + 1}
             initialType={type as "adult" | "child"}
             onRemove={() => handleRemovePassenger(index)}
-            onValidationChange={(isValid) =>
-              handleValidityChange(index, isValid)
-            }
+            onValidationChange={(isValid) => handleValidityChange(index, isValid)}
             onDataReady={(data) => handlePassengerDataReady(index, data)}
           />
         ))}
       </div>
 
-      <div
-        className={classes["passengers-list-add"]}
-        onClick={handleAddPassenger}
-      >
+      <div className={classes["passengers-list-add"]} onClick={handleAddPassenger}>
         <span>Добавить пассажира</span>
         <PlusIcon />
       </div>

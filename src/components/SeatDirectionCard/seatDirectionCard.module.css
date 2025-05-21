@@ -156,7 +156,7 @@
   box-sizing: border-box;
 }
 
-.seats__types-info-wagon {
+.seats__types-info-wagon-container {
   padding: 0 20px;
   height: 37px;
   width: 100%;
@@ -172,6 +172,10 @@
   align-items: center;
 }
 
+.seats__types-info-wagons {
+  display: flex;
+  gap: 15px;
+}
 .seats__count {
   width: 100%;
   box-sizing: border-box;
@@ -225,13 +229,10 @@
   display: flex;
   justify-content: space-between;
 
-  align-items: center;
+      align-items: flex-start;
+   
 }
 
-.seats__types-info-wagon-number {
-  display: flex;
-  gap: 8px;
-}
 .number-white {
   font-weight: 700;
   color: rgba(255, 255, 255, 1);
@@ -266,6 +267,7 @@
   width: 100%;
   justify-content: space-around;
   align-items: flex-start;
+  gap: 10px;
 }
 .seats__types-info-wagon-options-seats {
   gap: 15px;
@@ -276,12 +278,10 @@
   font-weight: 400;
   font-size: 18px;
   line-height: 140%;
+   padding-top: 15px;
+
 
   color: rgba(41, 41, 41, 1);
-}
-.seats__types-info-wagon-options-section {
-  display: flex;
-  gap: 10px;
 }
 
 .seats__types-info-wagon-options-section-title {
@@ -298,14 +298,29 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+   padding-top: 15px;
+
 }
 .price {
   font-weight: 700;
   font-size: 24px;
   line-height: 100%;
+  display: flex;
+}
+
+.seats__rub-icon {
+  margin-left: 10px;
+  color: rgba(146, 143, 148, 1);
+}
+.seats__types-info-wagon-options-service {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+  padding-top: 15px;
 }
 .seats__types-info-wagon-options-service-options {
-  margin-top: 30px;
+
   display: flex;
   align-items: center;
   gap: 15px;

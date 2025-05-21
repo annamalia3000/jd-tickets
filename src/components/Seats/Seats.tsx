@@ -12,6 +12,7 @@ import {
   setBackwardKids,
   setBackwardKidsNoSeat,
 } from "../../redux/slicers/selectedTicketSlice";
+import { PopUp } from "../PopUp/PopUp";
 import { useState } from "react";
 
 export const Seats = () => {
@@ -19,12 +20,10 @@ export const Seats = () => {
   const selectedTicket = useSelector(
     (state: RootState) => state.selectedTicket
   );
+    const [error, setError] = useState(false);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  console.log("selectedTicket.forward:", selectedTicket.forward);
-console.log("seats.departure:", seats.departure);
-console.log("selectedTicket.backward:", selectedTicket.backward);
-console.log("seats.arrival:", seats.arrival);
 
   const [forwardPassengers, setForwardPassengers] = useState({
     adults: 1,
@@ -37,8 +36,26 @@ console.log("seats.arrival:", seats.arrival);
     kids: 0,
     kidsNoSeat: 0,
   });
-
   const handleClick = () => {
+    const forwardSelectedSeats = selectedTicket.forward.selectedSeats || [];
+    const backwardSelectedSeats = selectedTicket.backward?.selectedSeats || [];
+
+    const forwardTotal = forwardPassengers.adults + forwardPassengers.kids;
+    const backwardTotal = backwardPassengers.adults + backwardPassengers.kids;
+
+    if (forwardSelectedSeats.length < forwardTotal) {
+      setError(true);;
+      return;
+    }
+
+    if (
+      selectedTicket.backward &&
+      backwardSelectedSeats.length < backwardTotal
+    ) {
+      setError(true);;
+      return;
+    }
+
     dispatch(setForwardAdults(forwardPassengers.adults));
     dispatch(setForwardKids(forwardPassengers.kids));
     dispatch(setForwardKidsNoSeat(forwardPassengers.kidsNoSeat));
@@ -54,6 +71,17 @@ console.log("seats.arrival:", seats.arrival);
 
   return (
     <div className={classes["seats-container"]}>
+      {error && (
+        <PopUp
+          type="info"
+          textFirst="Вы выбрали не все места"
+          textSecond="Выберите места для всех пассажиров"ЛЦ
+          onClose={() => {
+            setError(false);
+          }}
+          isOpen={error}
+        />
+      )}
       <h3 className={classes["seats-title"]}>Выбор мест</h3>
 
       {selectedTicket.forward &&
@@ -78,14 +106,12 @@ console.log("seats.arrival:", seats.arrival);
         />
       )}
 
-     
-        <button
-          onClick={handleClick}
-          className={cn(classes["seats-button"], ["shadow-button"])}
-        >
-          ДАЛЕЕ
-        </button>
-
+      <button
+        onClick={handleClick}
+        className={cn(classes["seats-button"], ["shadow-button"])}
+      >
+        ДАЛЕЕ
+      </button>
     </div>
   );
 };

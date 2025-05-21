@@ -25,6 +25,7 @@ export const Check = () => {
 
   const url = import.meta.env.VITE_HOST;
   const apiUrl = `${url}/order`;
+  const totalPrice = order.user?.total_price || 0;
 
   const handleSubmit = async () => {
     try {
@@ -168,7 +169,7 @@ export const Check = () => {
                           classes["check__content__section-total-price-text"]
                         }
                       >
-                        {selectedTicket?.totalPrice}
+                        {totalPrice}
                       </span>
                       <span className={classes["check-rub-icon"]}>
                         <RubIcon />

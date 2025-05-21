@@ -7,6 +7,7 @@ type User = {
   phone: string;
   email: string;
   payment_method: "cash" | "online";
+  total_price?: number;
 };
 
 type PersonInfo = {
@@ -58,7 +59,11 @@ const orderSlice = createSlice({
     setArrivalTrip(state, action: PayloadAction<Trip>) {
       state.arrival = action.payload;
     },
-    clearOrder(state) {
+    setTotalPrice (state, action: PayloadAction<number>) {
+      if (state.user) {
+        state.user.total_price = action.payload;
+      }
+    },    clearOrder(state) {
       state.user = null;
       state.departure = null;
       state.arrival = null;
@@ -66,7 +71,7 @@ const orderSlice = createSlice({
   },
 });
 
-export const { setUser, setDepartureTrip, setArrivalTrip, clearOrder } =
+export const { setUser, setDepartureTrip, setArrivalTrip, setTotalPrice, clearOrder } =
   orderSlice.actions;
 
 export default orderSlice.reducer;

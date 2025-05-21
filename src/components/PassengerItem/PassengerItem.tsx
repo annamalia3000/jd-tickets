@@ -49,8 +49,9 @@ export const PassengerItem = ({
   const [passengerType, setPassengerType] = useState<"adult" | "child">(
     initialType
   );
-  const seats = useSelector(
-    (state: RootState) => state.seats
+
+  const selectedTicket = useSelector(
+    (state: RootState) => state.selectedTicket
   );
 
   const [lastName, setLastName] = useState("");
@@ -125,7 +126,6 @@ export const PassengerItem = ({
     } else {
       setFormError("");
     }
-
     if (docType === "passport") {
       const docValid = validatePassport(passportSeries, passportNumber);
       isValid = isValid && docValid;
@@ -135,11 +135,12 @@ export const PassengerItem = ({
     }
 
     onValidationChange(isValid);
+   const seat = selectedTicket?.forward?.selectedSeats?.[index-1];
 
-    if (isValid) {
+    if (isValid && seat) {
       const data = {
-        coach_id: seats.departure[0].coach._id, //заглушка
-        seat_number: 10, //заглушка
+        coach_id: seat.coach_id,
+        seat_number: seat.seat,
         is_child: passengerType === "child",
         include_children_seat: passengerType === "child",
         person_info: {
@@ -158,9 +159,9 @@ export const PassengerItem = ({
         },
       };
       onDataReady(data);
+      console.log(data)
     }
   };
-
   const handleSeriesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassportSeries(e.target.value);
   };

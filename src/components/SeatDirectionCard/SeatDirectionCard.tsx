@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import cn from "classnames";
 import ArrowIcon from "../../assets/icons/seats/yellow-arrow.svg?react";
 import TrainIcon from "../../assets/icons/seats/train.svg?react";
@@ -24,6 +24,11 @@ import { useSeconds } from "../../hooks/useSeconds";
 import { useDispatch } from "react-redux";
 import { clearSelectedTicket } from "../../redux/slicers/selectedTicketSlice";
 import { CoachWithSeats } from "../../redux/slicers/seatsSlice";
+import { CoachSeatMap } from "../CoachSeatMap/CoachSeatMap";
+import {
+  setForwardSelectedSeats,
+  setBackwardSelectedSeats,
+} from "../../redux/slicers/selectedTicketSlice";
 import classes from "./seatDirectionCard.module.css";
 
 type SeatDirectionCardProps = {
@@ -35,7 +40,11 @@ type SeatDirectionCardProps = {
     kids: number;
     kidsNoSeat: number;
   };
-  setPassengers: (p: { adults: number; kids: number; kidsNoSeat: number }) => void;
+  setPassengers: (p: {
+    adults: number;
+    kids: number;
+    kidsNoSeat: number;
+  }) => void;
 };
 
 export const SeatDirectionCard = ({
@@ -46,17 +55,56 @@ export const SeatDirectionCard = ({
   setPassengers,
 }: SeatDirectionCardProps) => {
   const [isNutritionActive, setIsNutritionActive] = useState(false);
+  const [selectedCoachIndex, setSelectedCoachIndex] = useState(0);
+  const [selectedSeats, setSelectedSeats] = useState<
+    { coach_id: string; seat: number }[]
+  >([]);
 
-  const coach = seatsData[0]?.coach;
+  const selectedCoachData = seatsData[selectedCoachIndex];
+  const coach = selectedCoachData.coach;
   const duration = useSeconds(directionTicket.departure.duration ?? 0);
   const classType = coach?.class_type;
 
   const dispatch = useDispatch();
-
   const backward = direction === "backward";
+
+useEffect(() => {
+  if (selectedSeats.length > 0) {
+    if (backward) {
+      dispatch(setBackwardSelectedSeats(selectedSeats));
+    } else {
+      dispatch(setForwardSelectedSeats(selectedSeats));
+    }
+  }
+}, [selectedSeats]);
 
   const handleBack = () => {
     dispatch(clearSelectedTicket());
+  };
+
+  const totalSeatsNeeded = passengers.adults + passengers.kids;
+
+  const handleSelectSeat = (seatIndex: number) => {
+    const coachId = coach._id;
+    const seatObj = { coach_id: coachId, seat: seatIndex };
+
+    const alreadySelected = selectedSeats.find(
+      (s) => s.coach_id === coachId && s.seat === seatIndex
+    );
+
+    if (alreadySelected) {
+      setSelectedSeats(
+        selectedSeats.filter(
+          (s) => !(s.coach_id === coachId && s.seat === seatIndex)
+        )
+      );
+    } else {
+      if (selectedSeats.length >= totalSeatsNeeded) {
+        setSelectedSeats([...selectedSeats.slice(1), seatObj]);
+      } else {
+        setSelectedSeats([...selectedSeats, seatObj]);
+      }
+    }
   };
 
   const useFormattedTime = (
@@ -85,12 +133,22 @@ export const SeatDirectionCard = ({
     classType && classType in priceInfo
       ? priceInfo[classType as keyof typeof priceInfo]?.bottom_price
       : undefined;
-
   return (
     <div className={classes["seats"]}>
-      <div className={backward ? classes["seats__controls-back"] : classes["seats__controls"]}>
-
-        <ArrowIcon className={backward ? classes["seats__controls-icon-back"] : classes["seats__controls-icon"]} />
+      <div
+        className={
+          backward
+            ? classes["seats__controls-back"]
+            : classes["seats__controls"]
+        }
+      >
+        <ArrowIcon
+          className={
+            backward
+              ? classes["seats__controls-icon-back"]
+              : classes["seats__controls-icon"]
+          }
+        />
         <button
           onClick={handleBack}
           className={cn(classes["seats__controls-button"], ["yel-button"])}
@@ -98,7 +156,6 @@ export const SeatDirectionCard = ({
           Выбрать другой поезд
         </button>
       </div>
-
       <div className={classes["seats__ticket-info"]}>
         <TrainIcon />
         <div className={classes["seats__ticket-info-direction"]}>
@@ -110,7 +167,6 @@ export const SeatDirectionCard = ({
           </span>
           <span>{directionTicket.departure.to.city.name}</span>
         </div>
-
         <div className={classes["seats__ticket-info-from"]}>
           <span className={classes["seats__ticket-info-time"]}>
             {datetimeFrom.localized}
@@ -122,9 +178,7 @@ export const SeatDirectionCard = ({
             {directionTicket.departure.from.railway_station_name}
           </span>
         </div>
-
         <TicketArrowIcon />
-
         <div className={classes["seats__ticket-info-to"]}>
           <span className={classes["seats__ticket-info-time"]}>
             {datetimeTo.localized}
@@ -136,7 +190,6 @@ export const SeatDirectionCard = ({
             {directionTicket.departure.to.railway_station_name}
           </span>
         </div>
-
         <div className={classes["seats__ticket-info-duration"]}>
           <ClocksIcon />
           <span>{duration}</span>
@@ -149,14 +202,10 @@ export const SeatDirectionCard = ({
           <div className={classes["seats__count-button-container"]}>
             <button
               className={cn(classes["seats__count-button"], ["yel-button"])}
-              onClick={() => {
-                if (passengers.adults < 5) {
-                  setPassengers({
-                    ...passengers,
-                    adults: passengers.adults + 1,
-                  });
-                }
-              }}
+              onClick={() =>
+                passengers.adults < 5 &&
+                setPassengers({ ...passengers, adults: passengers.adults + 1 })
+              }
             >
               Взрослых — {passengers.adults}
             </button>
@@ -168,14 +217,10 @@ export const SeatDirectionCard = ({
           <div className={classes["seats__count-button-container"]}>
             <button
               className={cn(classes["seats__count-button"], ["yel-button"])}
-              onClick={() => {
-                if (passengers.kids < 5) {
-                  setPassengers({
-                    ...passengers,
-                    kids: passengers.kids + 1,
-                  });
-                }
-              }}
+              onClick={() =>
+                passengers.kids < 5 &&
+                setPassengers({ ...passengers, kids: passengers.kids + 1 })
+              }
             >
               Детских — {passengers.kids}
             </button>
@@ -186,12 +231,12 @@ export const SeatDirectionCard = ({
 
           <div className={classes["seats__count-button-container"]}>
             <button
-              onClick={() => {
+              onClick={() =>
                 setPassengers({
                   ...passengers,
                   kidsNoSeat: passengers.kidsNoSeat + 1,
-                });
-              }}
+                })
+              }
               className={cn(classes["seats__count-button"], ["yel-button"])}
             >
               Детских «без места» — {passengers.kidsNoSeat}
@@ -234,27 +279,101 @@ export const SeatDirectionCard = ({
         </div>
 
         <div className={classes["seats__types-info"]}>
-          <div className={classes["seats__types-info-wagon"]}>
-            <span>Вагоны</span>
-            <span className={classes["number-white"]}>07</span>
-            <span className={classes["number-black"]}>09</span>
+          <div className={classes["seats__types-info-wagon-container"]}>
+            <div className={classes["seats__types-info-wagons"]}>
+              <span>Вагоны</span>
+              {seatsData.map((_, index) => (
+                <span
+                  key={index}
+                  onClick={() => setSelectedCoachIndex(index)}
+                  className={cn({
+                    [classes["number-white"]]: selectedCoachIndex === index,
+                    [classes["number-black"]]: selectedCoachIndex !== index,
+                  })}
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+              ))}
+            </div>
+            <span>Нумерация вагонов начинается с головы поезда</span>
           </div>
 
           <div className={classes["seats__types-info-wagon-options"]}>
-            <div>
-              <span className={classes["options-number"]}>07</span> вагон
+            <div className={classes["seats__types-info-wagon-options-number"]}>
+              <span className={classes["options-number"]}>
+                {String(selectedCoachIndex + 1).padStart(2, "0")}
+              </span>{" "}
+              вагон
             </div>
-            <div>
-              <span>Места </span>
-              <span>{coach?.available_seats}</span>
+            <div className={classes["seats__types-info-wagon-options-seats"]}>
+              <div
+                className={classes["seats__types-info-wagon-options-section"]}
+              >
+                <span
+                  className={
+                    classes["seats__types-info-wagon-options-section-title"]
+                  }
+                >
+                  Места{" "}
+                </span>
+                <span>{coach?.available_seats}</span>
+              </div>
+              {classType === "third" && (
+                <>
+                  <div
+                    className={
+                      classes["seats__types-info-wagon-options-section"]
+                    }
+                  >
+                    <span>Верхние </span>{" "}
+                    <span className={classes["text-bold"]}>3</span>
+                  </div>
+                  <div
+                    className={
+                      classes["seats__types-info-wagon-options-section"]
+                    }
+                  >
+                    <span>Нижние </span>{" "}
+                    <span className={classes["text-bold"]}>8</span>
+                  </div>
+                </>
+              )}
             </div>
-            <div>
-              <span>Стоимость: </span>
-              <span className={classes["price"]}>{topPrice}</span> <RubIcon />
-              <span className={classes["price"]}>{bottomPrice}</span> <RubIcon />
+
+            <div className={classes["seats__types-info-wagon-options-price"]}>
+              <span
+                className={
+                  classes["seats__types-info-wagon-options-section-title"]
+                }
+              >
+                Стоимость{" "}
+              </span>
+              {classType === "third" ? (
+                <>
+                  <span className={classes["price"]}>
+                    {topPrice}{" "}
+                    <RubIcon className={classes["seats__rub-icon"]} />
+                  </span>
+                  <span className={classes["price"]}>
+                    {bottomPrice}{" "}
+                    <RubIcon className={classes["seats__rub-icon"]} />
+                  </span>
+                </>
+              ) : (
+                <span className={classes["price"]}>
+                  {topPrice} <RubIcon className={classes["seats__rub-icon"]} />
+                </span>
+              )}
             </div>
+
             <div className={classes["seats__types-info-wagon-options-service"]}>
-              <span>Обслуживание ФПК</span>
+              <span
+                className={
+                  classes["seats__types-info-wagon-options-section-title"]
+                }
+              >
+                Обслуживание ФПК
+              </span>
               <div
                 className={
                   classes["seats__types-info-wagon-options-service-options"]
@@ -314,7 +433,15 @@ export const SeatDirectionCard = ({
             </div>
           </div>
         </div>
-      </div>  
+      </div>
+
+      <div>
+        <CoachSeatMap
+          data={selectedCoachData}
+          onSelectSeat={handleSelectSeat}
+          selectedSeats={selectedSeats.filter((s) => s.coach_id === coach._id)}
+        />
+      </div>
     </div>
   );
 };

@@ -5,10 +5,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
   available: boolean;
 };
 
-type Coach = {
+ type Coach = {
   _id: string;
   name: string;
-  class_type: string;
+  class_type: "first" | "second" | "third" | "fourth";
   have_wifi: boolean;
   have_air_conditioning: boolean;
   price: number;

@@ -27,7 +27,13 @@ export type TicketState = {
   kids?: number;
   kidsNoSeat?: number;
   totalPrice?: number;
+  selectedSeats?: SelectedSeat[];
 };
+
+type SelectedSeat = {
+  coach_id: string;
+  seat: number;
+}
 
 export type Train = {
   _id: string;
@@ -146,6 +152,7 @@ const initialSelectedTicket: TicketState = {
   kids: 0,
   kidsNoSeat: 0,
   totalPrice: 0,
+  selectedSeats: [],
 };
 
 const initialState: SelectedTicketsState = {
@@ -196,7 +203,16 @@ const selectedTicketsSlice = createSlice({
         state.backward.totalPrice = action.payload;
       }
     },
+    setForwardSelectedSeats: (state, action: PayloadAction<SelectedSeat[]>) => {
+      state.forward.selectedSeats = action.payload;
+    }, 
+    setBackwardSelectedSeats: (state, action: PayloadAction<SelectedSeat[]>) => {
+      if (state.backward) {
+        state.backward.selectedSeats = action.payload;
+      }
+    }
   },
+  
 });
 
 export const {
@@ -211,6 +227,8 @@ export const {
   setBackwardKidsNoSeat,
   setForwardTotalPrice,
   setBackwardTotalPrice,
+  setForwardSelectedSeats,
+  setBackwardSelectedSeats
 } = selectedTicketsSlice.actions;
 
 export default selectedTicketsSlice.reducer;

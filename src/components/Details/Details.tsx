@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RootState } from "../../redux/state/store";
-import { useSelector } from "react-redux";
+import { useSelector , useDispatch} from "react-redux";
 
 import PlusIcon from "../../assets/icons/toggle-plus.svg?react";
 import MinusIcon from "../../assets/icons/toggle-minus.svg?react";
@@ -9,6 +9,7 @@ import PassengerIcon from "../../assets/icons/passenger.svg?react";
 import RubIcon from "../../assets/icons/rub.svg?react";
 
 import { DirectionDetails } from "./DirectionDetails";
+import {setTotalPrice } from "../../redux/slicers/orderSlice";
 
 import classes from "./details.module.css";
 
@@ -33,6 +34,8 @@ export const Details = () => {
     (state: RootState) => state.selectedTicket
   );
 
+  const dispatch = useDispatch();
+
   const adults = selectedTicket?.forward.adults || 0;
   const kids = selectedTicket?.forward.kids || 0;
   const kidsNoSeat = selectedTicket?.forward.kidsNoSeat || 0;
@@ -55,6 +58,9 @@ export const Details = () => {
   }
 
   const priceTotal = priceAdults + priceKids;
+  useEffect(() => {
+    dispatch(setTotalPrice(priceTotal));
+  }, [priceTotal]);
 
   const [isOpenFrom, setIsOpenFrom] = useState(true);
 
