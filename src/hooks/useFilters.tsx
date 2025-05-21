@@ -16,9 +16,9 @@ export const useFilters = () => {
     ];
 
     return toggleKeys.every((key) => {
-      return !filters[key] || item.departure[key];
-    });
-  };
+      return !filters[key] || (item.departure as any)[key];
+;
+    });  };
 
   const filterByPrice = (item: RouteProps): boolean => {
     const minPrice = filters.minPrice;

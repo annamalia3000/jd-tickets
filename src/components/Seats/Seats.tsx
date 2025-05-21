@@ -75,7 +75,7 @@ export const Seats = () => {
         <PopUp
           type="info"
           textFirst="Вы выбрали не все места"
-          textSecond="Выберите места для всех пассажиров"ЛЦ
+          textSecond="Выберите места для всех пассажиров"
           onClose={() => {
             setError(false);
           }}

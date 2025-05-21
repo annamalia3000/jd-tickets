@@ -70,7 +70,7 @@ export const PassengersList = () => {
     setPassengers((prev) => [...prev, "adult"]);
     setValidStates((prev) => [...prev, false]);
     setPassengerDataList((prev) => [...prev, {}]);
-    dispatch(setForwardAdults(prev => prev + 1));
+    dispatch(setForwardAdults(adults + 1));
   };
 
   const handleValidityChange = (index: number, isValid: boolean) => {

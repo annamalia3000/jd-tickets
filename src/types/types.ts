@@ -7,7 +7,7 @@ export type RouteProps = {
     fourth: number;
   };
   departure: Train;
-  arrival: Train;
+  arrival?: Train;
 
   have_air_conditioning: boolean;
   have_first_class: boolean;

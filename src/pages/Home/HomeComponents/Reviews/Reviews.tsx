@@ -5,7 +5,8 @@ import cn from "classnames";
 import classes from "./reviews.module.css";
 
 export const Reviews = () => {
-  const [activeCircle, setActiveCircle] = useState(0); //логика для изменения цвета circle при прокрутке отзывов
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [activeCircle, _setActiveCircle] = useState(0); //логика для изменения цвета circle при прокрутке отзывов
 
   const reviewsData = [
     {
