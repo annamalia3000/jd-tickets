@@ -10,7 +10,7 @@ import classes from "./passengers.module.css";
 export const Passengers = () => {
   return (
     <div className={classes["passengers"]}>
-      <Banner img="img/order-banner.png" direction={true} extraClasses={true} />
+      <Banner img="/img/order-banner.png" direction={true} extraClasses={true} />
       <Suspense fallback={<Loader />}>
         <OrderNav activeStep={2} />
         <div className={classes["passengers__container"]}>

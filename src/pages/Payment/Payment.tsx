@@ -10,7 +10,7 @@ import classes from "./payment.module.css";
 export const Payment = () => {
   return (
     <div className={classes["payment"]}>
-      <Banner img="img/order-banner.png" direction={true} extraClasses={true} />
+      <Banner img="/img/order-banner.png" direction={true} extraClasses={true} />
             <Suspense fallback={<Loader />}> <OrderNav activeStep={3} />
       <div className={classes["payment__container"]}>
         <section className={classes["payment__section"]}>

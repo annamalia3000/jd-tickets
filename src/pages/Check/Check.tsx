@@ -108,7 +108,7 @@ export const Check = () => {
           isOpen={error}
         />
       )}
-      <Banner img="img/order-banner.png" direction={true} extraClasses={true} />
+      <Banner img="/img/order-banner.png" direction={true} extraClasses={true} />
       <Suspense fallback={<Loader />}>
         <OrderNav activeStep={4} />
         <div className={classes["check__container"]}>

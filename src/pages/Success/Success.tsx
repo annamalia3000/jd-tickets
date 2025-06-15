@@ -10,7 +10,7 @@ export const Success = () => {
       <Banner
         titleThin=" "
         titleBold="Благодарим Вас за заказ!"
-        img="img/success-banner.png"
+        img="/img/success-banner.png"
         direction={false}
       />
 

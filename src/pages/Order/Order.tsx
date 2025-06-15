@@ -20,7 +20,7 @@ export const Order = () => {
 
   return (
     <div className={classes["order"]}>
-      <Banner img="img/order-banner.png" direction={true} extraClasses={true} />
+      <Banner img="/img/order-banner.png" direction={true} extraClasses={true} />
       <Suspense fallback={<Loader />}>
         <OrderNav activeStep={1} />
         <div className={classes["order__container"]}>
