@@ -11,7 +11,7 @@ export const Home = () => {
       <Banner
         titleThin="Вся жизнь - "
         titleBold="путешествие!"
-        img="img/home-banner.jpeg"
+        img="/img/home-banner.jpeg"
         direction={true}
       />
       <section className={classes["home__section"]}>
